@@ -150,11 +150,14 @@ const CATS={
 
 map=L.map('map',{center:[-2.5,118],zoom:5,zoomControl:true});
 const osm=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'<a href="https://osm.org">OSM</a>'});
+const googleStreets=L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{maxZoom:20,attribution:'Google'});
+const googleSatellite=L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{maxZoom:20,attribution:'Google'});
+const googleHybrid=L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{maxZoom:20,attribution:'Google'});
 const satellite=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'<a href="https://esri.com">Esri</a>'});
 const dark=L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:19,attribution:'<a href="https://carto.com">CARTO</a>'});
 const terrain=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'<a href="https://opentopomap.org">OpenTopoMap</a>'});
-L.control.layers({"Street":osm,"Satellite":satellite,"Dark":dark,"Terrain":terrain},null,{collapsed:false}).addTo(map);
-osm.addTo(map);
+L.control.layers({"Google Street":googleStreets,"Google Satellite":googleSatellite,"Google Hybrid":googleHybrid,"OSM":osm,"Esri Satellite":satellite,"Dark":dark,"Terrain":terrain},null,{collapsed:false}).addTo(map);
+googleHybrid.addTo(map);
 
 async function loadData(){
   try{
