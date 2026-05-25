@@ -6,6 +6,7 @@
 <title>Spatial Second Brain</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm6lkpcCCz6o8DH6K0afQsNF_jnwNXCeo&libraries=places"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 :root{--bg:#fff;--bg2:#f8f9fa;--text:#1a1a2e;--text2:#555;--card:#fff;--card-border:#e0e0e0;--shadow:0 2px 8px rgba(0,0,0,0.1);--input-bg:#f0f0f0;--accent:#ffd700;--panel-w:380px}
@@ -102,8 +103,9 @@ header h1 span{color:var(--accent)}
   <div class="controls">
     <div class="search-wrap">
       <i class="fas fa-search"></i>
-      <input type="text" id="search" placeholder="Cari..." oninput="filterNodes()">
+      <input type="text" id="search" placeholder="Cari node atau tempat..." oninput="filterNodes()">
     </div>
+    <button class="filter-btn" id="placesBtn" onclick="togglePlaces()" style="display:none"><i class="fas fa-map-pin"></i> Tempat</button>
     <button class="filter-btn route-mode" id="routeBtn" onclick="toggleRouteMode()"><i class="fas fa-route"></i> Rute</button>
     <div id="filters" style="display:flex;gap:4px;flex-wrap:wrap"></div>
     <button class="theme-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
@@ -252,7 +254,21 @@ function showRoute(startId,endId){
     }
   });
   routeLayer.addTo(map);
-  let html=`<b><i class="fas fa-route"></i> Rute Belajar</b> (${path.length} langkah)<div class="steps">`;
+  let html=`<b><i class="fas fa-route"></i> Rute Belajar</b> (${path.length} langkah)`;
+  // Distance Matrix via Google API
+  if(window.google&&google.maps&&latlngs.length>1){
+    try{
+      const ds=new google.maps.DistanceMatrixService();
+      ds.getDistanceMatrix({origins:[latlngs[0]],destinations:[latlngs[latlngs.length-1]],travelMode:'DRIVING',unitSystem:google.maps.UnitSystem.METRIC},function(r,s){
+        if(s==='OK'&&r.rows[0]&&r.rows[0].elements[0]&&r.rows[0].elements[0].distance){
+          const e=r.rows[0].elements[0];
+          html+=`<div style="font-size:11px;color:var(--text2);margin:4px 0">🚗 <b>${e.distance.text}</b> · ⏱️ ${e.duration.text}</div>`;
+          document.getElementById('routeInfo').innerHTML=html+'<div class="steps">'+path.map((id,i)=>{const n=nodeIndex[id];return n?`<span class="step" onclick="map.setView([${n.coords[1]},${n.coords[0]}],13);openPanel('${id}')"><span class="num">${i+1}.</span> ${n.emoji} ${n.title}</span>`:'';}).join('')+'</div>';
+        }
+      });
+    }catch(e){}
+  }
+  html+='<div class="steps">';
   path.forEach((id,i)=>{const n=nodeIndex[id];if(n)html+=`<span class="step" onclick="map.setView([${n.coords[1]},${n.coords[0]}],13);openPanel('${id}')"><span class="num">${i+1}.</span> ${n.emoji} ${n.title}</span>`;});
   html+='</div>';
   document.getElementById('routeInfo').innerHTML=html;
@@ -310,8 +326,11 @@ function openPanel(id){
   h+=`<tr><td>Akurasi</td><td>${n.accuracy==='high'?'✅ ±100m':n.accuracy==='medium'?'⚠️ ±1-5km':'❌ ±5-10km'}</td></tr>`;
   h+=`<tr><td>ID</td><td style="font-size:11px;color:var(--text2)">${n.id}</td></tr>`;
   h+='</table>';
-  // Google buttons
   const lat=n.coords[1].toFixed(5),lng=n.coords[0].toFixed(5);
+  // Street View image from API
+  h+=`<div style="margin-top:8px;border-radius:8px;overflow:hidden">`;
+  h+=`<img src="https://maps.googleapis.com/maps/api/streetview?size=360x160&location=${lat},${lng}&fov=80&key=AIzaSyBm6lkpcCCz6o8DH6K0afQsNF_jnwNXCeo" style="width:100%;display:block" alt="Street View" onerror="this.parentElement.style.display='none'">`;
+  h+=`</div>`;
   h+=`<div style="display:flex;gap:4px;margin-top:8px">`;
   h+=`<a href="https://www.google.com/maps?q=${lat},${lng}&layer=c&cbll=${lat},${lng}" target="_blank" style="flex:1;padding:6px;border-radius:6px;background:#4285f4;color:#fff;text-decoration:none;font-size:11px;font-weight:600;text-align:center"><i class="fas fa-street-view"></i> Street View</a>`;
   h+=`<a href="https://www.google.com/maps/dir//${lat},${lng}" target="_blank" style="flex:1;padding:6px;border-radius:6px;background:#34a853;color:#fff;text-decoration:none;font-size:11px;font-weight:600;text-align:center"><i class="fas fa-directions"></i> Directions</a>`;
@@ -400,6 +419,39 @@ function renderLines(){
 }
 
 loadData();
+
+// ===== GOOGLE PLACES =====
+let autocomplete=null, placesActive=false;
+function togglePlaces(){
+  placesActive=!placesActive;
+  document.getElementById('placesBtn').classList.toggle('active',placesActive);
+  if(placesActive){
+    document.getElementById('search').placeholder='Cari tempat (restoran, SPBU, dll)...';
+  } else {
+    document.getElementById('search').placeholder='Cari node atau tempat...';
+    filterNodes();
+  }
+}
+
+// Init Places autocomplete when API loads
+function initPlaces(){
+  const input=document.getElementById('search');
+  if(window.google&&google.maps&&google.maps.places){
+    autocomplete=new google.maps.places.Autocomplete(input,{types:['establishment','geocode'],componentRestrictions:{country:'id'}});
+    autocomplete.addListener('place_changed',function(){
+      const place=autocomplete.getPlace();
+      if(place.geometry){
+        const lat=place.geometry.location.lat();
+        const lng=place.geometry.location.lng();
+        map.setView([lat,lng],15);
+        L.circleMarker([lat,lng],{radius:8,color:'#ff4444',fillColor:'#ff4444',fillOpacity:0.8}).addTo(map).bindPopup(`<b>${place.name}</b><br>${place.formatted_address||''}`).openPopup();
+      }
+    });
+    document.getElementById('placesBtn').style.display='inline-block';
+  }
+}
+// Retry initPlaces after Google API loads
+setTimeout(initPlaces,2000);
 </script>
 </body>
 </html>
