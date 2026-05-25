@@ -309,7 +309,14 @@ function openPanel(id){
   h+=`<tr><td>Longitude</td><td>${n.coords[0].toFixed(5)}</td></tr>`;
   h+=`<tr><td>Akurasi</td><td>${n.accuracy==='high'?'✅ ±100m':n.accuracy==='medium'?'⚠️ ±1-5km':'❌ ±5-10km'}</td></tr>`;
   h+=`<tr><td>ID</td><td style="font-size:11px;color:var(--text2)">${n.id}</td></tr>`;
-  h+='</table></div>';
+  h+='</table>';
+  // Google buttons
+  const lat=n.coords[1].toFixed(5),lng=n.coords[0].toFixed(5);
+  h+=`<div style="display:flex;gap:4px;margin-top:8px">`;
+  h+=`<a href="https://www.google.com/maps?q=${lat},${lng}&layer=c&cbll=${lat},${lng}" target="_blank" style="flex:1;padding:6px;border-radius:6px;background:#4285f4;color:#fff;text-decoration:none;font-size:11px;font-weight:600;text-align:center"><i class="fas fa-street-view"></i> Street View</a>`;
+  h+=`<a href="https://www.google.com/maps/dir//${lat},${lng}" target="_blank" style="flex:1;padding:6px;border-radius:6px;background:#34a853;color:#fff;text-decoration:none;font-size:11px;font-weight:600;text-align:center"><i class="fas fa-directions"></i> Directions</a>`;
+  h+=`<a href="https://www.google.com/maps?q=${lat},${lng}" target="_blank" style="flex:1;padding:6px;border-radius:6px;background:#ea4335;color:#fff;text-decoration:none;font-size:11px;font-weight:600;text-align:center"><i class="fas fa-map-marker-alt"></i> Google Maps</a>`;
+  h+=`</div></div>`;
   
   // Tags
   if(n.tags&&n.tags.length>0){
