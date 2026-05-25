@@ -1,0 +1,2253 @@
+{
+  "metadata": {
+    "name": "Spatial Second Brain - Pertamina Digital Twin",
+    "version": "1.0",
+    "created": "2026-05-26",
+    "total_nodes": 61,
+    "total_lines": 8
+  },
+  "features": [
+    {
+      "id": "knt-001",
+      "type": "Feature",
+      "properties": {
+        "id": "knt-001",
+        "title": "Grha Pertamina",
+        "emoji": "🏢",
+        "category": "knt",
+        "tags": [],
+        "description": "Kantor Pusat PT Pertamina (Persero)",
+        "accuracy": "high",
+        "metadata": {
+          "Pendapatan": "USD75 miliar",
+          "Laba": "USD4.4 miliar",
+          "Aset": "USD93.68 miliar",
+          "Karyawan": "35.000",
+          "Alamat": "Jl. Medan Merdeka Timur 11-13, Jakarta Pusat"
+        },
+        "media": {
+          "youtube": [
+            "https://youtu.be/dQw4w9WgXcQ"
+          ],
+          "links": [
+            {
+              "url": "https://pertamina.com",
+              "title": "Website Resmi"
+            }
+          ]
+        },
+        "connections": [],
+        "style": {
+          "marker_color": "#ff4444",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8324,
+          -6.1775
+        ]
+      }
+    },
+    {
+      "id": "knt-002",
+      "type": "Feature",
+      "properties": {
+        "id": "knt-002",
+        "title": "PHE Hulu",
+        "emoji": "🛢️",
+        "category": "knt",
+        "tags": [],
+        "description": "Subholding Upstream",
+        "accuracy": "high",
+        "metadata": {
+          "Produksi_Minyak": "290.000 bopd",
+          "Produksi_Gas": "1.820 MMscfd",
+          "Blok_Operasi": "24",
+          "Negara": "Indonesia + 7 negara"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff4444",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8167,
+          -6.2833
+        ]
+      }
+    },
+    {
+      "id": "knt-003",
+      "type": "Feature",
+      "properties": {
+        "id": "knt-003",
+        "title": "KPI Refining",
+        "emoji": "🏭",
+        "category": "knt",
+        "tags": [],
+        "description": "Subholding Refining & Petrochemical",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "900.000 bph",
+          "Kilang": "6 nasional"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff4444",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.831,
+          -6.176
+        ]
+      }
+    },
+    {
+      "id": "knt-004",
+      "type": "Feature",
+      "properties": {
+        "id": "knt-004",
+        "title": "Patra Niaga",
+        "emoji": "⛽",
+        "category": "knt",
+        "tags": [],
+        "description": "Subholding Commercial & Trading",
+        "accuracy": "high",
+        "metadata": {
+          "Volume BBM": "93.2 juta KL/tahun",
+          "SPBU": "7.380+"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff4444",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83,
+          -6.18
+        ]
+      }
+    },
+    {
+      "id": "knt-005",
+      "type": "Feature",
+      "properties": {
+        "id": "knt-005",
+        "title": "PGN Gas",
+        "emoji": "🔥",
+        "category": "knt",
+        "tags": [],
+        "description": "Subholding Gas Bumi",
+        "accuracy": "high",
+        "metadata": {
+          "Distribusi": "980 BBTUD",
+          "Pipa": "10.450 km",
+          "Pelanggan": "785.000"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff4444",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82,
+          -6.19
+        ]
+      }
+    },
+    {
+      "id": "knt-006",
+      "type": "Feature",
+      "properties": {
+        "id": "knt-006",
+        "title": "Pertamina Power NRE",
+        "emoji": "⚡",
+        "category": "knt",
+        "tags": [],
+        "description": "Subholding Power & New Renewable Energy",
+        "accuracy": "high",
+        "metadata": {
+          "EBT_Terpasang": "2.502 MW",
+          "Target_2030": "10 GW"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff4444",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.833,
+          -6.178
+        ]
+      }
+    },
+    {
+      "id": "knt-007",
+      "type": "Feature",
+      "properties": {
+        "id": "knt-007",
+        "title": "PIS Marine",
+        "emoji": "🚢",
+        "category": "knt",
+        "tags": [],
+        "description": "Subholding Integrated Marine Logistics",
+        "accuracy": "high",
+        "metadata": {
+          "Armada": "440+ kapal",
+          "Volume": "118 juta ton/tahun"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff4444",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.829,
+          -6.181
+        ]
+      }
+    },
+    {
+      "id": "knt-008",
+      "type": "Feature",
+      "properties": {
+        "id": "knt-008",
+        "title": "PGE Geothermal",
+        "emoji": "🌋",
+        "category": "knt",
+        "tags": [],
+        "description": "Subholding Geothermal - Listed IDX: PGEO",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "672 MW",
+          "WKP": "13",
+          "Pendapatan_2024": "USD407,12 juta"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff4444",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8324,
+          -6.1776
+        ]
+      }
+    },
+    {
+      "id": "knt-009",
+      "type": "Feature",
+      "properties": {
+        "id": "knt-009",
+        "title": "Pertamina EP Cepu",
+        "emoji": "🛢️",
+        "category": "knt",
+        "tags": [],
+        "description": "Operator Blok Cepu (Banyu Urip)",
+        "accuracy": "high",
+        "metadata": {
+          "Produksi": "165.000 bopd",
+          "Lokasi": "Bojonegoro, Jatim"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff4444",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8,
+          -6.2333
+        ]
+      }
+    },
+    {
+      "id": "knt-010",
+      "type": "Feature",
+      "properties": {
+        "id": "knt-010",
+        "title": "Pertamina EP",
+        "emoji": "🛢️",
+        "category": "knt",
+        "tags": [],
+        "description": "PEP 6 Assets 21 Fields",
+        "accuracy": "high",
+        "metadata": {
+          "Produksi": "~100.000 bopd",
+          "Field": "21",
+          "Assets": "6"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff4444",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81,
+          -6.27
+        ]
+      }
+    },
+    {
+      "id": "klg-001",
+      "type": "Feature",
+      "properties": {
+        "id": "klg-001",
+        "title": "Kilang Balikpapan RU V",
+        "emoji": "🏭",
+        "category": "klg",
+        "tags": [],
+        "description": "260rb -> 360rb bph (RDMP). Sejak 1922",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "260.000 bph",
+          "Target_RDMP": "360.000 bph",
+          "Berdiri": "1922",
+          "Produk": "BBM, Avtur, Petrokimia",
+          "Lokasi": "Balikpapan, Kaltim"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffd700",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.826,
+          -1.2507
+        ]
+      }
+    },
+    {
+      "id": "klg-002",
+      "type": "Feature",
+      "properties": {
+        "id": "klg-002",
+        "title": "Kilang Cilacap RU IV",
+        "emoji": "🏭",
+        "category": "klg",
+        "tags": [],
+        "description": "348rb bph - Kilang terbesar RI. Green Refinery",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "348.000 bph",
+          "Terbesar": "Indonesia",
+          "Green_Refinery": "HVO/SAF 6.000 bph",
+          "Kontribusi_BBM_Nasional": "34%"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffd700",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.0167,
+          -7.7167
+        ]
+      }
+    },
+    {
+      "id": "klg-003",
+      "type": "Feature",
+      "properties": {
+        "id": "klg-003",
+        "title": "Kilang Dumai RU II",
+        "emoji": "🏭",
+        "category": "klg",
+        "tags": [],
+        "description": "170rb bph. Sejak 1971",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "170.000 bph",
+          "Berdiri": "1971",
+          "Lokasi": "Dumai, Riau"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffd700",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.47248,
+          1.67846
+        ]
+      }
+    },
+    {
+      "id": "klg-004",
+      "type": "Feature",
+      "properties": {
+        "id": "klg-004",
+        "title": "Kilang Plaju RU III",
+        "emoji": "🏭",
+        "category": "klg",
+        "tags": [],
+        "description": "100rb bph. Sejak 1904 - Tertua di RI",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "100.000 bph",
+          "Berdiri": "1904",
+          "Lokasi": "Plaju, Sumsel",
+          "Status": "Tertua di Indonesia"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffd700",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7333,
+          -2.9833
+        ]
+      }
+    },
+    {
+      "id": "klg-005",
+      "type": "Feature",
+      "properties": {
+        "id": "klg-005",
+        "title": "Kilang Balongan RU VI",
+        "emoji": "🏭",
+        "category": "klg",
+        "tags": [],
+        "description": "125rb bph. Pemasok utama BBM Jakarta",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "125.000 bph",
+          "Produk": "BBM, LPG",
+          "Jalur_Utama": "Jakarta via pipa 200km"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffd700",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          108.3167,
+          -6.4333
+        ]
+      }
+    },
+    {
+      "id": "klg-006",
+      "type": "Feature",
+      "properties": {
+        "id": "klg-006",
+        "title": "Kilang Kasim RU VII",
+        "emoji": "🏭",
+        "category": "klg",
+        "tags": [],
+        "description": "10rb bph. Melayani Papua",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "10.000 bph",
+          "Lokasi": "Sorong, Papua"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffd700",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          131.289,
+          -1.278
+        ]
+      }
+    },
+    {
+      "id": "klg-007",
+      "type": "Feature",
+      "properties": {
+        "id": "klg-007",
+        "title": "RDMP Balikpapan",
+        "emoji": "🏭",
+        "category": "klg",
+        "tags": [],
+        "description": "Proyek Refinery Development Balikpapan",
+        "accuracy": "high",
+        "metadata": {
+          "Investasi": "USD6.5 miliar",
+          "Target": "360.000 bph"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffd700",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.85,
+          -1.24
+        ]
+      }
+    },
+    {
+      "id": "klg-008",
+      "type": "Feature",
+      "properties": {
+        "id": "klg-008",
+        "title": "GRR Tuban",
+        "emoji": "🏭",
+        "category": "klg",
+        "tags": [],
+        "description": "Grass Root Refinery - Kilang Baru",
+        "accuracy": "high",
+        "metadata": {
+          "Investasi": "USD4.5 miliar",
+          "Status": "Dalam pembangunan"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffd700",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.05,
+          -6.88
+        ]
+      }
+    },
+    {
+      "id": "ofs-001",
+      "type": "Feature",
+      "properties": {
+        "id": "ofs-001",
+        "title": "ONWJ Arjuna Complex",
+        "emoji": "🌊",
+        "category": "ofs",
+        "tags": [],
+        "description": "Platform utama PHE ONWJ - FSO Arjuna",
+        "accuracy": "low",
+        "metadata": {
+          "Area": "8.300 km2",
+          "Produksi": "68.000 boepd",
+          "Lokasi": "Laut Jawa utara Indramayu",
+          "Kumulatif": "1.4 miliar barel"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#4488ff",
+          "marker_size": "small"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2,
+          -5.9
+        ]
+      }
+    },
+    {
+      "id": "ofs-002",
+      "type": "Feature",
+      "properties": {
+        "id": "ofs-002",
+        "title": "ONWJ Lima Platform",
+        "emoji": "🌊",
+        "category": "ofs",
+        "tags": [],
+        "description": "Flow station produksi 4rb bopd",
+        "accuracy": "low",
+        "metadata": {
+          "Produksi_Minyak": "4.000 bopd",
+          "Produksi_Gas": "75 MMscfd"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#4488ff",
+          "marker_size": "small"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0,
+          -5.85
+        ]
+      }
+    },
+    {
+      "id": "ofs-003",
+      "type": "Feature",
+      "properties": {
+        "id": "ofs-003",
+        "title": "ONWJ GG Field",
+        "emoji": "🌊",
+        "category": "ofs",
+        "tags": [],
+        "description": "Platform gas 30MMcfd, pipa ke Balongan",
+        "accuracy": "low",
+        "metadata": {
+          "Produksi_Gas": "30 MMcfd",
+          "Tujuan": "Kilang Balongan"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#4488ff",
+          "marker_size": "small"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3,
+          -5.95
+        ]
+      }
+    },
+    {
+      "id": "ofs-004",
+      "type": "Feature",
+      "properties": {
+        "id": "ofs-004",
+        "title": "ONWJ OOA Platform",
+        "emoji": "🌊",
+        "category": "ofs",
+        "tags": [],
+        "description": "Platform baru 2026 - eco-friendly",
+        "accuracy": "low",
+        "metadata": {
+          "Produksi_Tambahan": "2.996 bopd + 21 MMscfd gas",
+          "Tahun": "2026",
+          "Pipa_Subsea": "14 km ke Balongan"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#4488ff",
+          "marker_size": "small"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.33,
+          -5.97
+        ]
+      }
+    },
+    {
+      "id": "ofs-005",
+      "type": "Feature",
+      "properties": {
+        "id": "ofs-005",
+        "title": "ONWJ YY Field",
+        "emoji": "🌊",
+        "category": "ofs",
+        "tags": [],
+        "description": "Penemuan baru - tambahan 4.065 bopd",
+        "accuracy": "low",
+        "metadata": {
+          "Produksi": "4.065 bopd",
+          "Gas": "25.5 MMscfd"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#4488ff",
+          "marker_size": "small"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4,
+          -6.05
+        ]
+      }
+    },
+    {
+      "id": "ofs-006",
+      "type": "Feature",
+      "properties": {
+        "id": "ofs-006",
+        "title": "WMO Madura",
+        "emoji": "🌊",
+        "category": "ofs",
+        "tags": [],
+        "description": "West Madura Offshore",
+        "accuracy": "low",
+        "metadata": {
+          "Produksi_Minyak": "4.403 bopd",
+          "Produksi_Gas": "65 MMscfd",
+          "Area": "1.666 km2"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#4488ff",
+          "marker_size": "small"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.65,
+          -7.1
+        ]
+      }
+    },
+    {
+      "id": "ofs-007",
+      "type": "Feature",
+      "properties": {
+        "id": "ofs-007",
+        "title": "OSES Sumsel",
+        "emoji": "🌊",
+        "category": "ofs",
+        "tags": [],
+        "description": "Offshore SE Sumatra - Temuan Fanny-2",
+        "accuracy": "low",
+        "metadata": "{}",
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#4488ff",
+          "marker_size": "small"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.0,
+          -5.0
+        ]
+      }
+    },
+    {
+      "id": "ofs-008",
+      "type": "Feature",
+      "properties": {
+        "id": "ofs-008",
+        "title": "NSO Aceh",
+        "emoji": "🌊",
+        "category": "ofs",
+        "tags": [],
+        "description": "North Sumatra Offshore",
+        "accuracy": "low",
+        "metadata": {
+          "Kedalaman": "350 feet"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#4488ff",
+          "marker_size": "small"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          97.0,
+          4.5
+        ]
+      }
+    },
+    {
+      "id": "ons-001",
+      "type": "Feature",
+      "properties": {
+        "id": "ons-001",
+        "title": "PEP Rantau",
+        "emoji": "🛢️",
+        "category": "ons",
+        "tags": [],
+        "description": "Asset 1 - Aceh Tamiang. Produksi tertua",
+        "accuracy": "medium",
+        "metadata": {
+          "Asset": "1",
+          "Lokasi": "Aceh Tamiang"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          97.9,
+          4.3
+        ]
+      }
+    },
+    {
+      "id": "ons-002",
+      "type": "Feature",
+      "properties": {
+        "id": "ons-002",
+        "title": "PEP Prabumulih",
+        "emoji": "🛢️",
+        "category": "ons",
+        "tags": [],
+        "description": "Asset 2 - Sumsel. Produksi utama",
+        "accuracy": "medium",
+        "metadata": {
+          "Asset": "2",
+          "Produksi": "~15.000 bopd"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.2,
+          -3.4
+        ]
+      }
+    },
+    {
+      "id": "ons-003",
+      "type": "Feature",
+      "properties": {
+        "id": "ons-003",
+        "title": "PEP Jatibarang",
+        "emoji": "🛢️",
+        "category": "ons",
+        "tags": [],
+        "description": "Asset 3 - Indramayu. Jabar",
+        "accuracy": "medium",
+        "metadata": {
+          "Asset": "3",
+          "Lokasi": "Indramayu"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          108.3,
+          -6.5
+        ]
+      }
+    },
+    {
+      "id": "ons-004",
+      "type": "Feature",
+      "properties": {
+        "id": "ons-004",
+        "title": "PEN Cepu",
+        "emoji": "🛢️",
+        "category": "ons",
+        "tags": [],
+        "description": "Asset 4 - Blora",
+        "accuracy": "medium",
+        "metadata": {
+          "Asset": "4",
+          "Lokasi": "Blora"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.6,
+          -7.1
+        ]
+      }
+    },
+    {
+      "id": "ons-005",
+      "type": "Feature",
+      "properties": {
+        "id": "ons-005",
+        "title": "PEP Sangatta",
+        "emoji": "🛢️",
+        "category": "ons",
+        "tags": [],
+        "description": "Asset 5 - Kutai Timur",
+        "accuracy": "medium",
+        "metadata": {
+          "Asset": "5",
+          "Lokasi": "Kaltim"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.2,
+          0.6
+        ]
+      }
+    },
+    {
+      "id": "ons-006",
+      "type": "Feature",
+      "properties": {
+        "id": "ons-006",
+        "title": "PEPC Banyu Urip",
+        "emoji": "🛢️",
+        "category": "ons",
+        "tags": [],
+        "description": "Ladang minyak onshore terbesar RI. 165rb bopd",
+        "accuracy": "high",
+        "metadata": {
+          "Produksi": "165.000 bopd",
+          "Operator": "PEPC + ExxonMobil",
+          "Kontribusi": "Terbesar di Indonesia"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.88,
+          -7.15
+        ]
+      }
+    },
+    {
+      "id": "ons-007",
+      "type": "Feature",
+      "properties": {
+        "id": "ons-007",
+        "title": "Jambaran Tiung Biru",
+        "emoji": "🔥",
+        "category": "ons",
+        "tags": [],
+        "description": "Ladang gas 330 MMSCFD. Investasi USD1.55M",
+        "accuracy": "high",
+        "metadata": {
+          "Produksi_Gas": "330 MMSCFD",
+          "Investasi": "USD1.55 miliar"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.75,
+          -7.12
+        ]
+      }
+    },
+    {
+      "id": "geo-001",
+      "type": "Feature",
+      "properties": {
+        "id": "geo-001",
+        "title": "Kamojang 235 MW",
+        "emoji": "🌋",
+        "category": "geo",
+        "tags": [],
+        "description": "5 unit. Sejak 1983. PROPER EMAS 11 tahun",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "235 MW (5 unit)",
+          "Berdiri": "1983",
+          "Penghargaan": "PROPER EMAS 11 tahun",
+          "Tipe": "Tertua PGE"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.7851,
+          -7.1388
+        ]
+      }
+    },
+    {
+      "id": "geo-002",
+      "type": "Feature",
+      "properties": {
+        "id": "geo-002",
+        "title": "Ulubelu 220 MW",
+        "emoji": "🌋",
+        "category": "geo",
+        "tags": [],
+        "description": "Lampung. Green Hydrogen 100kg/hari",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "220 MW",
+          "Proyek": "Green Hydrogen 100kg/hari"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.68,
+          -5.35
+        ]
+      }
+    },
+    {
+      "id": "geo-003",
+      "type": "Feature",
+      "properties": {
+        "id": "geo-003",
+        "title": "Lahendong 120 MW",
+        "emoji": "🌋",
+        "category": "geo",
+        "tags": [],
+        "description": "Sulawesi Utara. 30% listrik Sulut",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "120 MW (6x20)",
+          "Kontribusi": "30% listrik Sulawesi Utara"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.85,
+          1.35
+        ]
+      }
+    },
+    {
+      "id": "geo-004",
+      "type": "Feature",
+      "properties": {
+        "id": "geo-004",
+        "title": "Lumut Balai 55 MW",
+        "emoji": "🌋",
+        "category": "geo",
+        "tags": [],
+        "description": "Sumatera Selatan",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "55 MW"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7167,
+          -4.2167
+        ]
+      }
+    },
+    {
+      "id": "geo-005",
+      "type": "Feature",
+      "properties": {
+        "id": "geo-005",
+        "title": "Karaha 30 MW",
+        "emoji": "🌋",
+        "category": "geo",
+        "tags": [],
+        "description": "Tasikmalaya, Jawa Barat",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "30 MW"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          108.0833,
+          -7.0833
+        ]
+      }
+    },
+    {
+      "id": "geo-006",
+      "type": "Feature",
+      "properties": {
+        "id": "geo-006",
+        "title": "Sibayak 12 MW",
+        "emoji": "🌋",
+        "category": "geo",
+        "tags": [],
+        "description": "Tanah Karo, Sumatera Utara",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "12 MW"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#44bb44",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          98.5,
+          3.2
+        ]
+      }
+    },
+    {
+      "id": "dep-001",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-001",
+        "title": "Depo Plumpang Jakarta",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Utama Jabodetabek 300rb KL",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "300.000 KL",
+          "Melayani": "Jabodetabek"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.885,
+          -6.14
+        ]
+      }
+    },
+    {
+      "id": "dep-002",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-002",
+        "title": "Depo Tanjung Priok",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Terminal BBM pelabuhan utama",
+        "accuracy": "high",
+        "metadata": {
+          "Tipe": "Terminal BBM Pelabuhan"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8815,
+          -6.1035
+        ]
+      }
+    },
+    {
+      "id": "dep-003",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-003",
+        "title": "Depo Surabaya",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Jl. Perak Barat 277. Utama Jatim",
+        "accuracy": "high",
+        "metadata": {
+          "Alamat": "Jl. Perak Barat 277"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.7355,
+          -7.2183
+        ]
+      }
+    },
+    {
+      "id": "dep-004",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-004",
+        "title": "Depo Pontianak",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Jl. Khatulistiwa 282 Kalbar",
+        "accuracy": "high",
+        "metadata": {
+          "Alamat": "Jl. Khatulistiwa 282"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.3267,
+          -0.0033
+        ]
+      }
+    },
+    {
+      "id": "dep-005",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-005",
+        "title": "Depo Tarakan",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Jl. Yos Sudarso 15 Kaltara",
+        "accuracy": "high",
+        "metadata": {
+          "Alamat": "Jl. Yos Sudarso 15"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.6,
+          3.3
+        ]
+      }
+    },
+    {
+      "id": "dep-006",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-006",
+        "title": "Depo Jayapura",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Jl. Nimboran 2 Papua",
+        "accuracy": "high",
+        "metadata": {
+          "Alamat": "Jl. Nimboran 2"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.7167,
+          -2.5333
+        ]
+      }
+    },
+    {
+      "id": "dep-007",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-007",
+        "title": "Depo Denpasar",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Jl. Pelabuhan Benoa 7 Bali",
+        "accuracy": "high",
+        "metadata": {
+          "Alamat": "Jl. Pelabuhan Benoa 7"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.2167,
+          -8.65
+        ]
+      }
+    },
+    {
+      "id": "dep-008",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-008",
+        "title": "Depo Belawan",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Medan Sumut",
+        "accuracy": "high",
+        "metadata": {},
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          98.6833,
+          3.7833
+        ]
+      }
+    },
+    {
+      "id": "dep-009",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-009",
+        "title": "Depo Makassar",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Utama Indonesia Timur",
+        "accuracy": "medium",
+        "metadata": {},
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.4167,
+          -5.1333
+        ]
+      }
+    },
+    {
+      "id": "dep-010",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-010",
+        "title": "Depo Palembang",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Sumsel",
+        "accuracy": "medium",
+        "metadata": {},
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7333,
+          -2.9833
+        ]
+      }
+    },
+    {
+      "id": "dep-011",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-011",
+        "title": "Depo Batam",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Kepri",
+        "accuracy": "medium",
+        "metadata": {},
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.02,
+          1.08
+        ]
+      }
+    },
+    {
+      "id": "dep-012",
+      "type": "Feature",
+      "properties": {
+        "id": "dep-012",
+        "title": "Depo Semarang",
+        "emoji": "📦",
+        "category": "dep",
+        "tags": [],
+        "description": "Jateng",
+        "accuracy": "medium",
+        "metadata": {},
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ffffff",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.42,
+          -6.97
+        ]
+      }
+    },
+    {
+      "id": "lng-001",
+      "type": "Feature",
+      "properties": {
+        "id": "lng-001",
+        "title": "Tangguh LNG",
+        "emoji": "🧊",
+        "category": "lng",
+        "tags": [],
+        "description": "7.6 juta ton/tahun. 3 train. Ekspor Asia",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "7.6 juta ton/tahun",
+          "Train": "3",
+          "Lokasi": "Teluk Bintuni, Papua Barat",
+          "Ekspor": "China, Jepang, Korea"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff8800",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          133.25,
+          -2.4167
+        ]
+      }
+    },
+    {
+      "id": "lng-002",
+      "type": "Feature",
+      "properties": {
+        "id": "lng-002",
+        "title": "Bontang LNG",
+        "emoji": "🧊",
+        "category": "lng",
+        "tags": [],
+        "description": "22.6 juta ton/tahun. 8 train. Terbesar",
+        "accuracy": "high",
+        "metadata": {
+          "Kapasitas": "22.6 juta ton/tahun",
+          "Train": "8",
+          "Lokasi": "Bontang, Kaltim"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff8800",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.5,
+          0.1333
+        ]
+      }
+    },
+    {
+      "id": "lng-003",
+      "type": "Feature",
+      "properties": {
+        "id": "lng-003",
+        "title": "Arun LNG",
+        "emoji": "🧊",
+        "category": "lng",
+        "tags": [],
+        "description": "Konversi terminal regasifikasi",
+        "accuracy": "high",
+        "metadata": {
+          "Lokasi": "Lhokseumawe, Aceh",
+          "Status": "Regasifikasi"
+        },
+        "media": {},
+        "connections": [],
+        "style": {
+          "marker_color": "#ff8800",
+          "marker_size": "medium"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          97.1,
+          5.2
+        ]
+      }
+    },
+    {
+      "id": "edu-001",
+      "type": "Feature",
+      "properties": {
+        "id": "edu-001",
+        "title": "Turunan Fungsi - First Principle",
+        "emoji": "📈",
+        "category": "edu",
+        "tags": [
+          "kalkulus",
+          "matematika",
+          "turunan"
+        ],
+        "description": "Konsep dasar turunan: limit dari (f(x+h)-f(x))/h saat h->0",
+        "accuracy": "medium",
+        "metadata": {
+          "Topik": "Kalkulus Diferensial",
+          "Tingkat": "SMA / Semester 1 Kuliah",
+          "Kata_Kunci": "Limit, Slope, Laju Perubahan"
+        },
+        "media": {
+          "youtube": [
+            {
+              "url": "https://youtu.be/WUvT0K6TlY8",
+              "title": "3Blue1Brown - Essence of Calculus"
+            }
+          ],
+          "links": [
+            {
+              "url": "https://www.khanacademy.org/math/differential-calculus",
+              "title": "Khan Academy"
+            }
+          ]
+        },
+        "connections": [
+          {
+            "id": "edu-002",
+            "relation": "next",
+            "label": "→ Lanjut ke Integral"
+          }
+        ],
+        "style": {
+          "marker_color": "#ff6b6b",
+          "marker_size": "medium"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            106.83,
+            -6.23
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83,
+          -6.23
+        ]
+      }
+    },
+    {
+      "id": "edu-002",
+      "type": "Feature",
+      "properties": {
+        "id": "edu-002",
+        "title": "Integral - Area Under Curve",
+        "emoji": "📊",
+        "category": "edu",
+        "tags": [
+          "kalkulus",
+          "matematika",
+          "integral"
+        ],
+        "description": "Integral = luas area di bawah kurva. Kebalikan dari turunan (Fundamental Theorem of Calculus)",
+        "accuracy": "medium",
+        "metadata": {
+          "Topik": "Kalkulus Integral",
+          "Tingkat": "SMA / Semester 1 Kuliah",
+          "Kata_Kunci": "Area, Anti-turunan, Riemann Sum"
+        },
+        "media": {
+          "youtube": [
+            {
+              "url": "https://youtu.be/rfG8ce4nE0M",
+              "title": "3Blue1Brown - Integral"
+            }
+          ]
+        },
+        "connections": [
+          {
+            "id": "edu-001",
+            "relation": "previous",
+            "label": "← Butuh Turunan dulu"
+          }
+        ],
+        "style": {
+          "marker_color": "#ff6b6b",
+          "marker_size": "medium"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            106.835,
+            -6.23
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.835,
+          -6.23
+        ]
+      }
+    },
+    {
+      "id": "edu-003",
+      "type": "Feature",
+      "properties": {
+        "id": "edu-003",
+        "title": "Hukum Newton - F = ma",
+        "emoji": "⚡",
+        "category": "edu",
+        "tags": [
+          "fisika",
+          "mekanika",
+          "newton"
+        ],
+        "description": "Hukum II Newton: Percepatan benda sebanding dengan gaya yang bekerja",
+        "accuracy": "medium",
+        "metadata": {
+          "Topik": "Fisika Dasar - Mekanika",
+          "Rumus": "F = m × a",
+          "Satuan": "Newton (N) = kg·m/s²"
+        },
+        "media": {
+          "youtube": [
+            {
+              "url": "https://youtu.be/kKKM8Y-jhRk",
+              "title": "Fisika Dasar - Hukum Newton"
+            }
+          ]
+        },
+        "connections": [
+          {
+            "id": "edu-004",
+            "relation": "related",
+            "label": "→ Energi Kinetik"
+          }
+        ],
+        "style": {
+          "marker_color": "#ff6b6b",
+          "marker_size": "medium"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            106.84,
+            -6.23
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84,
+          -6.23
+        ]
+      }
+    },
+    {
+      "id": "edu-004",
+      "type": "Feature",
+      "properties": {
+        "id": "edu-004",
+        "title": "Energi Kinetik - EK = ½mv²",
+        "emoji": "💨",
+        "category": "edu",
+        "tags": [
+          "fisika",
+          "energi",
+          "mekanika"
+        ],
+        "description": "Energi yang dimiliki benda bergerak. Sebanding dengan massa dan kuadrat kecepatan",
+        "accuracy": "medium",
+        "metadata": {
+          "Topik": "Fisika Dasar - Energi",
+          "Rumus": "Ek = ½ × m × v²",
+          "Satuan": "Joule (J)"
+        },
+        "media": {
+          "youtube": [
+            {
+              "url": "https://youtu.be/VJgP4W-uHrE",
+              "title": "Energi Kinetik dan Potensial"
+            }
+          ]
+        },
+        "style": {
+          "marker_color": "#ff6b6b",
+          "marker_size": "medium"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            106.845,
+            -6.23
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.845,
+          -6.23
+        ]
+      }
+    },
+    {
+      "id": "edu-005",
+      "type": "Feature",
+      "properties": {
+        "id": "edu-005",
+        "title": "Vektor - Direction & Magnitude",
+        "emoji": "🧭",
+        "category": "edu",
+        "tags": [
+          "matematika",
+          "vektor",
+          "fisika"
+        ],
+        "description": "Vektor = besaran yang punya nilai dan arah. Dasar dari semua mekanika dan grafika komputer",
+        "accuracy": "medium",
+        "metadata": {
+          "Topik": "Matematika - Aljabar Linear",
+          "Komponen": "x, y, z",
+          "Operasi": "Penjumlahan, Dot Product, Cross Product"
+        },
+        "media": {
+          "youtube": [
+            {
+              "url": "https://youtu.be/fNk_zzaMoSs",
+              "title": "3Blue1Brown - Vectors"
+            }
+          ]
+        },
+        "style": {
+          "marker_color": "#ff6b6b",
+          "marker_size": "medium"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            106.83,
+            -6.235
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83,
+          -6.235
+        ]
+      }
+    },
+    {
+      "id": "edu-006",
+      "type": "Feature",
+      "properties": {
+        "id": "edu-006",
+        "title": "Aljabar Linear - Matriks",
+        "emoji": "🔢",
+        "category": "edu",
+        "tags": [
+          "matematika",
+          "aljabar",
+          "matriks"
+        ],
+        "description": "Matriks = tabel bilangan. Dasar dari machine learning, grafika 3D, dan optimasi",
+        "accuracy": "medium",
+        "metadata": {
+          "Topik": "Matematika - Aljabar Linear",
+          "Dimensi": "m × n (baris × kolom)",
+          "Operasi": "Perkalian, Determinan, Invers, Eigen"
+        },
+        "media": {
+          "youtube": [
+            {
+              "url": "https://youtu.be/kjBOesZCoqc",
+              "title": "3Blue1Brown - Linear Algebra"
+            }
+          ]
+        },
+        "style": {
+          "marker_color": "#ff6b6b",
+          "marker_size": "medium"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            106.835,
+            -6.235
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.835,
+          -6.235
+        ]
+      }
+    },
+    {
+      "id": "edu-007",
+      "type": "Feature",
+      "properties": {
+        "id": "edu-007",
+        "title": "Struktur Pemerintahan Indonesia",
+        "emoji": "🏛️",
+        "category": "edu",
+        "tags": [
+          "pemerintahan",
+          "indonesia",
+          "politik"
+        ],
+        "description": "Struktur pemerintahan Indonesia: Lembaga Tinggi, Kemenko, Kementerian, LPNK, LNS, BUMN",
+        "accuracy": "medium",
+        "metadata": {
+          "Topik": "Ilmu Pemerintahan",
+          "Jumlah_Lembaga": "7+ Kategori",
+          "Total_Entitas": "170+"
+        },
+        "media": {
+          "links": [
+            {
+              "url": "https://hermes-agent.nousresearch.com/",
+              "title": "Buka Pemerintahan_Indonesia"
+            }
+          ]
+        },
+        "style": {
+          "marker_color": "#ff6b6b",
+          "marker_size": "medium"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            106.84,
+            -6.235
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84,
+          -6.235
+        ]
+      }
+    }
+  ],
+  "lines": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Minyak: ONWJ ke Cilacap",
+        "description": "Minyak mentah dari ONWJ (Laut Jawa) dikirim via kapal tanker PIS ke Kilang Cilacap untuk diolah jadi BBM",
+        "style": "lc",
+        "color": "#4488ff",
+        "type": "line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            107,
+            -5.8
+          ],
+          [
+            107.5,
+            -6.5
+          ],
+          [
+            108,
+            -7.2
+          ],
+          [
+            109.0167,
+            -7.7167
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Minyak: Cepu ke Balikpapan",
+        "description": "Banyu Urip diekspor dan dikirim ke Kilang Balikpapan",
+        "style": "lc",
+        "color": "#4488ff",
+        "type": "line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            111.88,
+            -7.15
+          ],
+          [
+            112.2183,
+            -6.7067
+          ],
+          [
+            114,
+            -4
+          ],
+          [
+            116.826,
+            -1.2507
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "BBM: Balongan pipa ke Jakarta",
+        "description": "Pipa BBM 200km. 50% suplai BBM Jakarta",
+        "style": "lb",
+        "color": "#ff8844",
+        "type": "line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            108.3167,
+            -6.4333
+          ],
+          [
+            107.5,
+            -6.3
+          ],
+          [
+            106.885,
+            -6.14
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "BBM: Cilacap ke Surabaya",
+        "description": "Distribusi BBM ke Jatim dan Bali via kapal",
+        "style": "lb",
+        "color": "#ff8844",
+        "type": "line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            109.0167,
+            -7.7167
+          ],
+          [
+            110,
+            -6.5
+          ],
+          [
+            112.73,
+            -7.22
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "BBM: Surabaya-Makassar-Papua",
+        "description": "Rute terpanjang. Melayani 15 provinsi timur Indonesia",
+        "style": "lb",
+        "color": "#ff8844",
+        "type": "line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            112.73,
+            -7.22
+          ],
+          [
+            115,
+            -6
+          ],
+          [
+            119.4167,
+            -5.1333
+          ],
+          [
+            128.1833,
+            -3.7
+          ],
+          [
+            140.7167,
+            -2.5333
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Gas: Trans Sumatera 2000km",
+        "description": "Pipa gas utama dari Aceh ke Palembang. 800 MMSCFD",
+        "style": "lg",
+        "color": "#44bb44",
+        "type": "line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            97.1,
+            5.2
+          ],
+          [
+            98.6833,
+            3.7833
+          ],
+          [
+            101.45,
+            0.5333
+          ],
+          [
+            104.7333,
+            -2.9833
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Gas: Trans Jawa 1000km",
+        "description": "Pipa gas Jakarta-Surabaya. 500 MMSCFD",
+        "style": "lg",
+        "color": "#44bb44",
+        "type": "line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            106.82,
+            -6.19
+          ],
+          [
+            107,
+            -6.3
+          ],
+          [
+            108.3167,
+            -6.4333
+          ],
+          [
+            109.0167,
+            -7.7167
+          ],
+          [
+            111.75,
+            -7.12
+          ],
+          [
+            112.73,
+            -7.22
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Listrik: Kamojang ke PLN",
+        "description": "235 MW geothermal untuk 200rb rumah via PLN",
+        "style": "ll",
+        "color": "#aa44ff",
+        "type": "line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            107.7851,
+            -7.1388
+          ],
+          [
+            107,
+            -6.8
+          ],
+          [
+            106.7,
+            -6.2
+          ]
+        ]
+      }
+    }
+  ]
+}
