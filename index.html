@@ -4,233 +4,347 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Spatial Second Brain</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-:root {
-  --bg: #fff; --bg2: #f8f9fa; --text: #1a1a2e; --text2: #555;
-  --card: #fff; --card-border: #e0e0e0; --shadow: 0 2px 8px rgba(0,0,0,0.1);
-  --input-bg: #f0f0f0; --accent: #ffd700;
-  --line-color: #4488ff; --line-width: 3px;
-}
-[data-theme="dark"] {
-  --bg: #0d1117; --bg2: #161b22; --text: #e6edf3; --text2: #8b949e;
-  --card: #161b22; --card-border: #30363d; --shadow: 0 2px 8px rgba(0,0,0,0.4);
-  --input-bg: #21262d; --accent: #ffd700;
-}
-* { margin:0; padding:0; box-sizing:border-box; font-family:system-ui,-apple-system,sans-serif; }
-body { background:var(--bg); color:var(--text); height:100vh; display:flex; flex-direction:column; }
+:root{--bg:#fff;--bg2:#f8f9fa;--text:#1a1a2e;--text2:#555;--card:#fff;--card-border:#e0e0e0;--shadow:0 2px 8px rgba(0,0,0,0.1);--input-bg:#f0f0f0;--accent:#ffd700}
+[data-theme="dark"]{--bg:#0d1117;--bg2:#161b22;--text:#e6edf3;--text2:#8b949e;--card:#161b22;--card-border:#30363d;--shadow:0 2px 8px rgba(0,0,0,0.4);--input-bg:#21262d;--accent:#ffd700}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+body{background:var(--bg);color:var(--text);height:100dvh;display:flex;flex-direction:column}
 
 /* HEADER */
-header { padding:10px 16px; background:var(--bg2); border-bottom:1px solid var(--card-border); display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
-header h1 { font-size:18px; font-weight:700; }
-header h1 span { color:var(--accent); }
-.controls { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-left:auto; }
-.search-wrap { position:relative; }
-.search-wrap input { padding:8px 12px 8px 32px; border-radius:8px; border:1px solid var(--card-border); background:var(--input-bg); color:var(--text); font-size:13px; width:200px; }
-.search-wrap i { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--text2); font-size:13px; }
-.filter-btn { padding:6px 12px; border-radius:8px; border:1px solid var(--card-border); background:var(--input-bg); color:var(--text); cursor:pointer; font-size:12px; }
-.filter-btn.active { background:var(--accent); color:#000; border-color:var(--accent); }
-.theme-btn { padding:6px 10px; border-radius:8px; border:1px solid var(--card-border); background:var(--input-bg); color:var(--text); cursor:pointer; }
-#stats { font-size:12px; color:var(--text2); }
-#stats b { color:var(--text); }
+header{padding:8px 12px;background:var(--bg2);border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+header h1{font-size:16px;font-weight:700;white-space:nowrap}
+header h1 span{color:var(--accent)}
+.controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-left:auto}
+.search-wrap{position:relative}
+.search-wrap input{padding:6px 10px 6px 28px;border-radius:6px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text);font-size:12px;width:160px}
+.search-wrap i{position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:11px}
+.filter-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text);cursor:pointer;font-size:11px;white-space:nowrap}
+.filter-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.filter-btn.route-mode{background:#4488ff;color:#fff;border-color:#4488ff}
+.filter-btn.route-mode.active{background:#ff4444}
+.theme-btn{padding:4px 8px;border-radius:6px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text);cursor:pointer}
+#stats{font-size:11px;color:var(--text2);white-space:nowrap}
+#stats b{color:var(--text)}
+.route-info{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:8px 12px;margin:4px 8px;font-size:12px;display:none;box-shadow:var(--shadow)}
+.route-info .steps{margin-top:6px;display:flex;gap:4px;flex-wrap:wrap}
+.route-info .step{padding:3px 8px;border-radius:4px;background:var(--input-bg);font-size:11px;cursor:pointer}
+.route-info .step:hover{background:var(--accent);color:#000}
+.route-info .step .num{font-weight:700;margin-right:4px}
+.route-info .step.done{opacity:0.5;text-decoration:line-through}
 
 /* MAP */
-#map { flex:1; width:100%; }
+#map{flex:1;width:100%}
 
-/* LEAFLET CUSTOM */
-.leaflet-container { background:var(--bg2) !important; }
-.leaflet-popup-content-wrapper { background:var(--card) !important; color:var(--text) !important; border-radius:12px !important; box-shadow:var(--shadow) !important; }
-.leaflet-popup-tip { background:var(--card) !important; }
-.popup-card { max-width:340px; font-size:13px; }
-.popup-card h2 { font-size:16px; margin-bottom:4px; }
-.popup-card .cat-badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; margin-bottom:8px; }
-.popup-card table { width:100%; border-collapse:collapse; margin:8px 0; }
-.popup-card td { padding:3px 6px; border-bottom:1px solid var(--card-border); font-size:12px; }
-.popup-card td:first-child { font-weight:600; color:var(--text2); width:40%; }
-.popup-card .media-links { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
-.popup-card .media-links a { text-decoration:none; padding:4px 10px; border-radius:6px; font-size:11px; font-weight:600; color:#fff; }
-.popup-card .desc { font-size:12px; color:var(--text2); margin:4px 0; }
-.popup-card .accuracy { font-size:11px; color:var(--text2); }
+/* POPUP */
+.leaflet-container{background:var(--bg2)!important}
+.leaflet-popup-content-wrapper{background:var(--card)!important;color:var(--text)!important;border-radius:10px!important;box-shadow:var(--shadow)!important;padding:0!important}
+.leaflet-popup-content{margin:12px!important;font-size:13px}
+.leaflet-popup-tip{background:var(--card)!important}
+.popup-card{max-width:320px}
+.popup-card h2{font-size:15px;margin-bottom:3px}
+.popup-card .cat-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600}
+.popup-card table{width:100%;border-collapse:collapse;margin:6px 0;font-size:11px}
+.popup-card td{padding:2px 5px;border-bottom:1px solid var(--card-border)}
+.popup-card td:first-child{font-weight:600;color:var(--text2);width:40%}
+.popup-card .desc{font-size:11px;color:var(--text2);margin:3px 0}
+.popup-card .media-links{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.popup-card .media-links a{text-decoration:none;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;color:#fff}
+.route-btn{display:block;margin-top:8px;padding:6px;border-radius:6px;border:none;background:var(--accent);color:#000;font-weight:700;font-size:11px;cursor:pointer;width:100%;text-align:center}
+.route-btn:hover{opacity:0.8}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🧠 <span>Spatial</span> Second Brain</h1>
+  <h1>🧠 <span>Spatial</span> Brain</h1>
   <div class="controls">
     <div class="search-wrap">
       <i class="fas fa-search"></i>
-      <input type="text" id="search" placeholder="Cari node..." oninput="filterNodes()">
+      <input type="text" id="search" placeholder="Cari..." oninput="filterNodes()">
     </div>
-    <div id="filters"></div>
+    <button class="filter-btn route-mode" id="routeBtn" onclick="toggleRouteMode()">
+      <i class="fas fa-route"></i> Rute
+    </button>
+    <div id="filters" style="display:flex;gap:4px;flex-wrap:wrap"></div>
     <button class="theme-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
-    <span id="stats">0 node</span>
+    <span id="stats">0</span>
   </div>
 </header>
 
+<div id="routeInfo" class="route-info"></div>
 <div id="map"></div>
 
 <script>
-const DATA_URL = 'data/master.geojson';
-let map, markers = [], allFeatures = [], allLines = [];
-let linesLayer, activeFilter = 'all';
+const DATA_URL='data/master.geojson';
+let map,markers=[],allFeatures=[],allLines=[];
+let linesLayer,activeFilter='all',routeMode=false,routeStart=null;
+let routeLayer,routePath=[],nodeIndex={},indexBuilt=false;
 
-// ===== CATEGORY DEFINITIONS =====
-const CATS = {
-  knt: {label:'Kantor', emoji:'🏢', color:'#ff4444'},
-  klg: {label:'Kilang', emoji:'🏭', color:'#ffd700'},
-  ofs: {label:'Offshore', emoji:'🌊', color:'#4488ff'},
-  dep: {label:'Depot', emoji:'📦', color:'#ffffff'},
-  geo: {label:'Geothermal', emoji:'🌋', color:'#44bb44'},
-  ons: {label:'Onshore', emoji:'🛢️', color:'#444444'},
-  lng: {label:'LNG', emoji:'🧊', color:'#ff8800'},
-  pgn: {label:'PGN', emoji:'🔥', color:'#aa44ff'},
-  ihc: {label:'RS IHC', emoji:'🏥', color:'#44ddff'},
-  edu: {label:'Pelajaran', emoji:'📚', color:'#ff6b6b'},
+const CATS={
+  knt:{label:'Kantor',emoji:'🏢',color:'#ff4444'},
+  klg:{label:'Kilang',emoji:'🏭',color:'#ffd700'},
+  ofs:{label:'Offshore',emoji:'🌊',color:'#4488ff'},
+  dep:{label:'Depot',emoji:'📦',color:'#999'},
+  geo:{label:'Geothermal',emoji:'🌋',color:'#44bb44'},
+  ons:{label:'Onshore',emoji:'🛢️',color:'#444'},
+  lng:{label:'LNG',emoji:'🧊',color:'#ff8800'},
+  pgn:{label:'PGN',emoji:'🔥',color:'#aa44ff'},
+  ihc:{label:'RS IHC',emoji:'🏥',color:'#44ddff'},
+  edu:{label:'Pelajaran',emoji:'📚',color:'#ff6b6b'},
 };
 
-// ===== INIT MAP =====
-map = L.map('map', {center: [-2.5, 118], zoom: 5, zoomControl: true});
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19, attribution: '&copy; <a href="https://osm.org">OpenStreetMap</a>'
-}).addTo(map);
+map=L.map('map',{center:[-2.5,118],zoom:5,zoomControl:true});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'<a href="https://osm.org">OSM</a>'}).addTo(map);
 
-// ===== LOAD DATA =====
-async function loadData() {
-  try {
-    const resp = await fetch(DATA_URL);
-    const data = await resp.json();
-    allFeatures = data.features || [];
-    allLines = data.lines || [];
-    document.getElementById('stats').innerHTML = `<b>${allFeatures.length}</b> node · <b>${allLines.length}</b> jalur`;
-    buildFilters();
-    renderLines();
-    renderNodes();
-  } catch(e) {
-    document.getElementById('stats').textContent = '❌ Gagal load data';
-    console.error(e);
-  }
+async function loadData(){
+  try{
+    const resp=await fetch(DATA_URL);
+    const data=await resp.json();
+    allFeatures=data.features||[];allLines=data.lines||[];
+    buildFilters();renderLines();buildIndex();renderNodes();
+  }catch(e){document.getElementById('stats').textContent='❌ Error';console.error(e)}
 }
 
-// ===== BUILD FILTERS =====
-function buildFilters() {
-  const cats = {};
-  allFeatures.forEach(f => { const c = f.properties.category; cats[c] = (cats[c]||0)+1; });
-  let html = `<button class="filter-btn active" data-cat="all" onclick="setFilter('all')">Semua (${allFeatures.length})</button>`;
-  Object.entries(cats).forEach(([k,v]) => {
-    const cat = CATS[k] || {label:k,emoji:'📌',color:'#888'};
-    html += `<button class="filter-btn" data-cat="${k}" onclick="setFilter('${k}')" style="border-left:3px solid ${cat.color}">${cat.emoji} ${cat.label} (${v})</button>`;
+function buildIndex(){
+  nodeIndex={};
+  allFeatures.forEach(f=>{
+    const p=f.properties;
+    nodeIndex[p.id]={
+      id:p.id,title:p.title,emoji:p.emoji||'📌',category:p.category,
+      tags:p.tags||[],connections:p.connections||[],coords:f.geometry.coordinates,
+      accuracy:p.accuracy||'medium',metadata:p.metadata||{},media:p.media||{},
+      description:p.description||'',markerColor:p.style?.marker_color||CATS[p.category]?.color||'#888'
+    };
   });
-  document.getElementById('filters').innerHTML = html;
+  indexBuilt=true;
 }
 
-function setFilter(cat) {
-  activeFilter = cat;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+function buildFilters(){
+  const cats={};
+  allFeatures.forEach(f=>{const c=f.properties.category;cats[c]=(cats[c]||0)+1});
+  let h=`<button class="filter-btn active" data-cat="all" onclick="setFilter('all')">Semua (${allFeatures.length})</button>`;
+  Object.entries(cats).forEach(([k,v])=>{
+    const cat=CATS[k]||{label:k,emoji:'📌',color:'#888'};
+    h+=`<button class="filter-btn" data-cat="${k}" onclick="setFilter('${k}')" style="border-left:3px solid ${cat.color}">${cat.emoji} ${v}</button>`;
+  });
+  document.getElementById('filters').innerHTML=h;
+  document.getElementById('stats').innerHTML=`<b>${allFeatures.length}</b> n · <b>${allLines.length}</b> l`;
+}
+
+function setFilter(cat){
+  activeFilter=cat;
+  document.querySelectorAll('#filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
   filterNodes();
 }
 
-// ===== RENDER =====
-function renderNodes() {
-  markers.forEach(m => map.removeLayer(m));
-  markers = [];
-  const query = document.getElementById('search').value.toLowerCase();
-
-  allFeatures.forEach(f => {
-    const p = f.properties;
-    const cat = CATS[p.category] || {label:'Lainnya',emoji:'📌',color:'#888'};
-    const inFilter = activeFilter === 'all' || p.category === activeFilter;
-    const inSearch = !query || p.title.toLowerCase().includes(query) || p.tags?.some(t=>t.toLowerCase().includes(query));
-    if (!inFilter || !inSearch) return;
-
-    const size = p.accuracy === 'high' ? 10 : p.accuracy === 'medium' ? 8 : 6;
-    const opacity = p.accuracy === 'low' ? 0.5 : 1;
-    const m = L.circleMarker(f.geometry.coordinates.reverse(), {
-      radius: size, fillColor: p.style?.marker_color || cat.color,
-      color: '#fff', weight: 2, opacity: 1, fillOpacity: opacity
-    });
-    f.geometry.coordinates.reverse(); // restore
-
-    // Popup HTML
-    let popup = `<div class="popup-card"><h2>${p.emoji||'📌'} ${p.title}</h2>`;
-    popup += `<span class="cat-badge" style="background:${cat.color};color:${cat.color==='#ffd700'||cat.color==='#fff'?'#000':'#fff'}">${cat.emoji} ${cat.label}</span>`;
-    popup += `<span style="font-size:11px;display:inline-flex;gap:4px;align-items:center;margin-left:6px;">`;
-    popup += p.accuracy === 'high' ? '✅ Akurat' : p.accuracy === 'medium' ? '⚠️ ±1-5km' : '❌ ±5-10km';
-    popup += `</span>`;
-    if (p.description) popup += `<div class="desc">${p.description}</div>`;
-
-    if (p.metadata && Object.keys(p.metadata).length > 0) {
-      popup += '<table>';
-      Object.entries(p.metadata).forEach(([k,v]) => {
-        const label = k.replace(/_/g,' ');
-        popup += `<tr><td>${label}</td><td><b>${v}</b></td></tr>`;
-      });
-      popup += '</table>';
-    }
-
-    // Connections
-    if (p.connections && p.connections.length > 0) {
-      popup += '<div style="margin-top:6px;font-size:11px"><b>🔗 Terhubung ke:</b><br>';
-      p.connections.forEach(c => popup += `<span style="color:var(--text2)">${c.label||'→'}</span><br>`);
-      popup += '</div>';
-    }
-
-    // Media links
-    if (p.media) {
-      popup += '<div class="media-links">';
-      if (p.media.youtube && p.media.youtube.length > 0) {
-        popup += `<a href="${p.media.youtube[0].url}" target="_blank" style="background:#ff0000"><i class="fab fa-youtube"></i> YouTube</a>`;
-      }
-      if (p.media.links && p.media.links.length > 0) {
-        p.media.links.forEach(l => popup += `<a href="${l.url}" target="_blank" style="background:#333"><i class="fas fa-link"></i> ${l.title}</a>`);
-      }
-      popup += '</div>';
-    }
-
-    popup += '</div>';
-    m.bindPopup(popup, {maxWidth:360, className:'custom-popup'});
-    m.addTo(map);
-    markers.push(m);
-  });
-
-  document.getElementById('stats').innerHTML = `<b>${allFeatures.length}</b> node · <b>${allLines.length}</b> jalur · tampil <b>${markers.length}</b>`;
+function toggleRouteMode(){
+  routeMode=!routeMode;
+  const btn=document.getElementById('routeBtn');
+  btn.classList.toggle('active',routeMode);
+  btn.innerHTML=routeMode?'<i class="fas fa-times"></i> Batal':'<i class="fas fa-route"></i> Rute';
+  if(!routeMode){routeStart=null;clearRoute();}
+  else document.getElementById('routeInfo').innerHTML='<i class="fas fa-info-circle"></i> Klik titik AWAL untuk mulai rute';
+  document.getElementById('routeInfo').style.display=routeMode?'block':'none';
 }
 
-// ===== SUPPLY CHAIN LINES =====
-function renderLines() {
-  if (linesLayer) map.removeLayer(linesLayer);
-  linesLayer = L.layerGroup();
-  allLines.forEach(line => {
-    const coords = line.geometry.coordinates.map(c => [c[1], c[0]]);
-    const color = line.properties.color || '#4488ff';
-    const poly = L.polyline(coords, {color, weight:3, opacity:0.7});
+function clearRoute(){
+  if(routeLayer)map.removeLayer(routeLayer);
+  routeLayer=null;routePath=[];
+  document.getElementById('routeInfo').style.display='none';
+}
+
+// === FIND PATH (BFS on knowledge graph) ===
+function findPath(startId,endId){
+  if(!indexBuilt)return null;
+  const queue=[[startId]],visited=new Set([startId]);
+  while(queue.length>0){
+    const path=queue.shift(),node=path[path.length-1];
+    if(node===endId)return path;
+    const n=nodeIndex[node];if(!n)continue;
+    const neighbors=[];
+    n.connections.forEach(c=>{if(c.id)neighbors.push(c.id)});
+    // Add reverse connections
+    Object.values(nodeIndex).forEach(other=>{
+      other.connections.forEach(c=>{
+        if(c.id===node&&!neighbors.includes(other.id))neighbors.push(other.id);
+      });
+    });
+    neighbors.forEach(nb=>{
+      if(!visited.has(nb)&&nodeIndex[nb]){visited.add(nb);queue.push([...path,nb]);}
+    });
+  }
+  return null;
+}
+
+function showRoute(startId,endId){
+  const path=findPath(startId,endId);
+  if(!path||path.length<2){
+    document.getElementById('routeInfo').innerHTML='❌ Tidak ada jalur antara node ini. Coba node lain.';
+    return;
+  }
+  if(routeLayer)map.removeLayer(routeLayer);
+  routePath=path;
+  
+  // Draw path
+  const latlngs=path.map(id=>{
+    const n=nodeIndex[id];
+    return n?[n.coords[1],n.coords[0]]:null;
+  }).filter(Boolean);
+  
+  routeLayer=L.layerGroup();
+  
+  // Main path line
+  const polyline=L.polyline(latlngs,{color:'#ff4444',weight:4,opacity:0.8,dashArray:'8,4'});
+  routeLayer.addLayer(polyline);
+  
+  // Step markers
+  path.forEach((id,i)=>{
+    const n=nodeIndex[id];if(!n)return;
+    const color=n.markerColor||CATS[n.category]?.color||'#888';
+    const marker=L.circleMarker([n.coords[1],n.coords[0]],{
+      radius:12,color:'#fff',weight:3,fillColor:'#ff4444',fillOpacity:0.9
+    });
+    marker.bindTooltip(`<b>${i+1}.</b> ${n.emoji} ${n.title}`,{permanent:false,direction:'top'});
+    marker.bindPopup(`<div class="popup-card"><h2>${n.emoji} ${n.title}</h2><span class="cat-badge" style="background:${color};color:#fff">Langkah ${i+1} dari ${path.length}</span></div>`);
+    marker.on('click',()=>{map.setView([n.coords[1],n.coords[0]],13)});
+    routeLayer.addLayer(marker);
+    
+    // Arrow markers between steps
+    if(i<path.length-1){
+      const next=nodeIndex[path[i+1]];
+      if(next){
+        const midLat=(n.coords[1]+next.coords[1])/2;
+        const midLng=(n.coords[0]+next.coords[0])/2;
+        const arrow=L.circleMarker([midLat,midLng],{
+          radius:6,color:'#ff4444',weight:2,fillColor:'#ff4444',fillOpacity:1
+        });
+        arrow.bindTooltip(`→ ${next.emoji} ${next.title}`);
+        routeLayer.addLayer(arrow);
+      }
+    }
+  });
+  
+  routeLayer.addTo(map);
+  
+  // Show route info panel
+  let html=`<b><i class="fas fa-route"></i> Rute Belajar</b> (${path.length} langkah)`;
+  html+='<div class="steps">';
+  path.forEach((id,i)=>{
+    const n=nodeIndex[id];
+    if(n)html+=`<span class="step" onclick="map.setView([${n.coords[1]},${n.coords[0]}],13)"><span class="num">${i+1}.</span> ${n.emoji} ${n.title}</span>`;
+  });
+  html+='</div>';
+  document.getElementById('routeInfo').innerHTML=html;
+  document.getElementById('routeInfo').style.display='block';
+  
+  // Fit map to show entire route
+  map.fitBounds(polyline.getBounds().pad(0.3));
+}
+
+// === RENDER NODES ===
+function renderNodes(){
+  markers.forEach(m=>map.removeLayer(m));markers=[];
+  const q=document.getElementById('search').value.toLowerCase();
+
+  allFeatures.forEach(f=>{
+    const p=f.properties,cat=CATS[p.category]||{label:'?',emoji:'📌',color:'#888'};
+    const inF=activeFilter==='all'||p.category===activeFilter;
+    const inS=!q||p.title.toLowerCase().includes(q)||p.tags?.some(t=>t.toLowerCase().includes(q));
+    if(!inF||!inS)return;
+
+    const sz=p.accuracy==='high'?10:p.accuracy==='medium'?8:6;
+    const op=p.accuracy==='low'?0.5:1;
+    const coords=[...f.geometry.coordinates];
+    const m=L.circleMarker([coords[1],coords[0]],{
+      radius:sz,fillColor:p.style?.marker_color||cat.color,
+      color:'#fff',weight:2,opacity:1,fillOpacity:op
+    });
+
+    // Rich popup
+    let pop=`<div class="popup-card"><h2>${p.emoji||'📌'} ${p.title}</h2>`;
+    pop+=`<span class="cat-badge" style="background:${cat.color};color:${cat.color==='#ffd700'?'#000':'#fff'}">${cat.emoji} ${cat.label}</span>`;
+    if(p.description)pop+=`<div class="desc">${p.description}</div>`;
+    if(p.metadata&&Object.keys(p.metadata).length>0){
+      pop+='<table>';
+      Object.entries(p.metadata).forEach(([k,v])=>pop+=`<tr><td>${k.replace(/_/g,' ')}</td><td><b>${v}</b></td></tr>`);
+      pop+='</table>';
+    }
+    // Connections
+    if(p.connections&&p.connections.length>0){
+      pop+='<div style="margin-top:4px;font-size:11px"><b>🔗 Terhubung:</b><br>';
+      p.connections.forEach(c=>pop+=`<span style="color:var(--text2)">${c.label||'→'}</span><br>`);
+      pop+='</div>';
+    }
+    // Media
+    if(p.media){
+      pop+='<div class="media-links">';
+      if(p.media.youtube&&p.media.youtube.length>0)
+        pop+=`<a href="${p.media.youtube[0].url}" target="_blank" style="background:#ff0000"><i class="fab fa-youtube"></i> YouTube</a>`;
+      if(p.media.links) p.media.links.forEach(l=>pop+=`<a href="${l.url}" target="_blank" style="background:#333"><i class="fas fa-link"></i> ${l.title}</a>`);
+      pop+='</div>';
+    }
+    // Rute button
+    if(routeMode&&p.id){
+      if(!routeStart){
+        pop+=`<button class="route-btn" onclick="event.stopPropagation();startRoute('${p.id}')">🚀 Jadikan TITIK AWAL rute</button>`;
+      }else if(routeStart!==p.id){
+        pop+=`<button class="route-btn" onclick="event.stopPropagation();showRoute('${routeStart}','${p.id}')">📍 Rute dari ${nodeIndex[routeStart]?.emoji||''} ${nodeIndex[routeStart]?.title||'...'}</button>`;
+      }else{
+        pop+=`<button class="route-btn" style="background:#eee;color:#999" disabled>📍 Titik awal</button>`;
+      }
+    }
+    pop+='</div>';
+    m.bindPopup(pop,{maxWidth:340});
+
+    m.on('click',()=>{map.setView([coords[1],coords[0]],zoom>12?zoom:12)});
+    m.addTo(map);markers.push(m);
+  });
+
+  const v=markers.length;
+  document.getElementById('stats').innerHTML=`<b>${allFeatures.length}</b> n · <b>${allLines.length}</b> l · tampil <b>${v}</b>`;
+}
+
+function startRoute(id){
+  routeStart=id;
+  const n=nodeIndex[id];
+  document.getElementById('routeInfo').innerHTML=`<i class="fas fa-flag-checkered"></i> Awal: ${n.emoji} ${n.title}.<br>Sekarang klik titik TUJUAN!`;
+  document.getElementById('routeInfo').style.display='block';
+  // Highlight start node
+  map.setView([n.coords[1],n.coords[0]],13);
+  filterNodes(); // re-render to update buttons
+}
+
+function filterNodes(){renderNodes();}
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  document.querySelector('.theme-btn i').className=isDark?'fas fa-moon':'fas fa-sun';
+}
+
+// Right click => Google Maps
+map.on('contextmenu',function(e){
+  window.open(`https://www.google.com/maps?q=${e.latlng.lat.toFixed(5)},${e.latlng.lng.toFixed(5)}`,'_blank');
+});
+
+// Supply chain lines
+function renderLines(){
+  if(linesLayer)map.removeLayer(linesLayer);
+  linesLayer=L.layerGroup();
+  allLines.forEach(line=>{
+    const coords=line.geometry.coordinates.map(c=>[c[1],c[0]]);
+    const color=line.properties.color||'#4488ff';
+    const poly=L.polyline(coords,{color,weight:2,opacity:0.5});
     poly.bindPopup(`<b>${line.properties.title}</b><br>${line.properties.description||''}`);
     linesLayer.addLayer(poly);
   });
   linesLayer.addTo(map);
 }
 
-// ===== SEARCH & FILTER =====
-function filterNodes() { renderNodes(); }
-
-// ===== THEME =====
-function toggleTheme() {
-  const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  document.querySelector('.theme-btn i').className = isDark ? 'fas fa-moon' : 'fas fa-sun';
-}
-
-// ===== GOOGLE MAPS LINK =====
-map.on('contextmenu', function(e) {
-  const lat = e.latlng.lat.toFixed(5);
-  const lng = e.latlng.lng.toFixed(5);
-  window.open(`https://www.google.com/maps?q=${lat},${lng}`, '_blank');
-});
-
-// ===== START =====
 loadData();
 </script>
 </body>
