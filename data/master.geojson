@@ -4,7 +4,12 @@
     "version": "1.0",
     "created": "2026-05-26",
     "total_nodes": 61,
-    "total_lines": 8
+    "total_lines": 8,
+    "accuracy": {
+      "high": "37 nodes - verified coordinates",
+      "medium": "16 nodes - city/district level",
+      "low": "8 nodes - area estimate"
+    }
   },
   "features": [
     {
