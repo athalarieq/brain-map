@@ -76,6 +76,7 @@ header h1 span{color:var(--accent)}
       <input type="text" id="search" placeholder="Cari node atau tempat...">
     </div>
     <button class="filter-btn" id="placesBtn" style="display:none" onclick="togglePlaces()"><i class="fas fa-map-pin"></i> Tempat</button>
+    <button class="filter-btn route-mode" id="palaceBtn" onclick="togglePalace()"><i class="fas fa-home"></i> Palace</button>
     <button class="filter-btn route-mode" id="routeBtn" onclick="toggleRouteMode()"><i class="fas fa-route"></i> Rute</button>
     <div id="filters" style="display:flex;gap:4px;flex-wrap:wrap"></div>
     <button class="theme-btn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
@@ -154,6 +155,95 @@ function buildFilters(){
 }
 
 function updateStats(){document.getElementById('stats').innerHTML=`<b>${allFeatures.length}</b> n · <b>${allLines.length}</b> l · tampil <b>${markers.filter(m=>m.getMap()).length}</b>`;}
+
+// ===== MEMORY PALACE MODE =====
+let palaceMode=false, palaceMarkers=[], palaceTopics=[];
+const PALACE_DATA = [
+  {title:'Pengertian Akuntansi',emoji:'🏠',color:'#ffd700',content:`# Pengertian Akuntansi\nAkuntansi adalah seni pencatatan, penggolongan, dan peringkasan transaksi keuangan.\n## Definisi\nAICPA: Seni mencatat, menggolongkan, dan meringkas transaksi\nIAI: Proses mengidentifikasi, mengukur, dan melaporkan informasi ekonomi\n## Siklus Akuntansi\n1. Transaksi\n2. Jurnal umum\n3. Buku besar\n4. Neraca saldo\n5. Penyesuaian\n6. Laporan keuangan`},
+  {title:'Persamaan Dasar',emoji:'🏡',color:'#58a6ff',content:`# Persamaan Dasar Akuntansi\nASET = LIABILITAS + EKUITAS\n## Komponen\nAset: Sumber daya perusahaan (kas, piutang)\nLiabilitas: Utang perusahaan\nEkuitas: Hak pemilik\n## Contoh\nSetor modal Rp10jt: Aset +10jt, Ekuitas +10jt`},
+  {title:'Jurnal Umum',emoji:'🏘️',color:'#3fb950',content:`# Jurnal Umum\nBuku harian kronologis transaksi.\n## Aturan Debit & Kredit\nAset (+Debit, -Kredit)\nLiabilitas (-Debit, +Kredit)\nEkuitas (-Debit, +Kredit)\nBeban (+Debit, -Kredit)\n## Contoh\nSetor modal: Kas (D) 10jt, Modal (K) 10jt`},
+  {title:'Buku Besar',emoji:'🏚️',color:'#ffa657',content:`# Buku Besar\nKumpulan akun untuk kelompok transaksi.\n## Bentuk\nT-Account: Bentuk T\nStaffel: Bentuk bersaldo\n## Posting\n1. Catat jurnal\n2. Pindah per akun\n3. Hitung saldo\n## Daftar Akun\n1xxx Aset | 2xxx Liabilitas | 3xxx Ekuitas`},
+  {title:'Laporan Keuangan',emoji:'🏤',color:'#ff6b6b',content:`# Laporan Keuangan\nOutput akhir siklus akuntansi.\n## Laba Rugi\nPendapatan - Beban = Laba/Rugi\n## Neraca\nASET = LIABILITAS + EKUITAS\n## Arus Kas\nOperasi, Investasi, Pendanaan`}
+];
+const PALACE_CENTER = {lat:-6.1865,lng:106.8232};
+
+function togglePalace(){
+  palaceMode=!palaceMode;
+  document.getElementById('palaceBtn').classList.toggle('active',palaceMode);
+  document.getElementById('palaceBtn').innerHTML=palaceMode?'<i class="fas fa-times"></i> Map':'<i class="fas fa-home"></i> Palace';
+  if(palaceMode){hideAllNodes();renderPalace();}
+  else{hidePalace();showAllNodes();}
+}
+
+function hideAllNodes(){
+  markers.forEach(m=>m.setMap(null));
+  lines.forEach(l=>l.setMap(null));
+}
+
+function showAllNodes(){
+  markers.forEach(m=>m.setMap(map));
+  lines.forEach(l=>l.setMap(map));
+  renderNodes();
+}
+
+function hidePalace(){
+  palaceMarkers.forEach(m=>m.setMap(null));
+  palaceMarkers=[];
+}
+
+function renderPalace(){
+  hidePalace();
+  const startLat=PALACE_CENTER.lat,startLng=PALACE_CENTER.lng;
+  PALACE_DATA.forEach((d,i)=>{
+    const pos={lat:startLat,lng:startLng+(i-2)*0.0005};
+    const marker=new google.maps.Marker({
+      position:pos,map,
+      title:d.title,
+      icon:{
+        url:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="60" height="70"><circle cx="30" cy="25" r="22" fill="'+d.color+'" stroke="#fff" stroke-width="3"/><text x="30" y="32" text-anchor="middle" font-size="20">'+d.emoji+'</text><polygon points="30,65 15,45 45,45" fill="'+d.color+'" stroke="#fff" stroke-width="2"/></svg>'),
+        scaledSize:new google.maps.Size(40,50),
+        anchor:new google.maps.Point(20,50)
+      }
+    });
+    marker.addListener('click',()=>showPalaceTopic(i));
+    palaceMarkers.push(marker);
+  });
+  map.setCenter(PALACE_CENTER);
+  map.setZoom(19);
+  showPalaceTopic(0);
+}
+
+function parsePalaceMD(md){
+  const lines=md.split('\n');
+  let html='';
+  let inList=false;
+  lines.forEach(line=>{
+    const t=line.trim();
+    if(!t)return;
+    if(t.startsWith('# ')&&!t.startsWith('## ')){html+=`<h1>${t.replace('# ','')}</h1>`;}
+    else if(t.startsWith('## ')){html+=`<h2>${t.replace('## ','')}</h2>`;}
+    else if(t.startsWith('1. ')||t.startsWith('2. ')||t.startsWith('3. ')||t.startsWith('4. ')||t.startsWith('5. ')||t.startsWith('6. ')){html+=`<li>${t.replace(/^\d+\. /,'')}</li>`;}
+    else if(t.includes('`')){html+=`<p>${t.replace(/`(.+?)`/g,'<code>$1</code>')}</p>`;}
+    else{html+=`<p>${t}</p>`;}
+  });
+  return html;
+}
+
+function showPalaceTopic(idx){
+  const d=PALACE_DATA[idx];
+  document.getElementById('panelTitle').textContent=`${d.emoji} ${d.title}`;
+  document.getElementById('panelSub').textContent=`${idx+1} dari ${PALACE_DATA.length}`;
+  let html='<div class="topic-nav">';
+  PALACE_DATA.forEach((dd,i)=>{
+    html+=`<div class="topic-btn ${i===idx?'active':''}" onclick="showPalaceTopic(${i})">${dd.emoji} ${dd.title}</div>`;
+  });
+  html+='</div>';
+  html+=parsePalaceMD(d.content);
+  document.getElementById('panelBody').innerHTML=html;
+  // Move map
+  const pos={lat:PALACE_CENTER.lat,lng:PALACE_CENTER.lng+(idx-2)*0.0005};
+  map.setCenter(pos);
+}
 
 function setFilter(cat){
   activeFilter=cat;
