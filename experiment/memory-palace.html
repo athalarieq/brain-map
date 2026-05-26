@@ -8,11 +8,9 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
 body{height:100vh;display:flex;flex-direction:column;background:#0d1117;color:#e6edf3}
-
 header{padding:10px 16px;background:#161b22;border-bottom:1px solid #30363d;display:flex;align-items:center;gap:10px}
 header h1{font-size:16px;font-weight:700;color:#ffd700}
 header span{font-size:12px;color:#8b949e}
-
 .main-wrap{display:flex;flex:1;overflow:hidden}
 #streetview{flex:1;height:100%}
 #sidePanel{width:400px;background:#161b22;border-left:1px solid #30363d;display:flex;flex-direction:column;overflow:hidden}
@@ -20,8 +18,6 @@ header span{font-size:12px;color:#8b949e}
 .panel-header h2{font-size:14px;font-weight:700;color:#ffd700}
 .panel-header .sub{font-size:11px;color:#8b949e;margin-top:2px}
 .panel-body{flex:1;overflow-y:auto;padding:16px;font-size:13px;line-height:1.6}
-
-/* Markdown Styling */
 .panel-body h1{font-size:20px;font-weight:700;color:#ffd700;margin:16px 0 8px;padding-bottom:4px;border-bottom:2px solid #ffd700}
 .panel-body h2{font-size:16px;font-weight:700;color:#58a6ff;margin:12px 0 6px;padding-left:8px;border-left:3px solid #58a6ff}
 .panel-body h3{font-size:14px;font-weight:600;color:#3fb950;margin:8px 0 4px;padding-left:16px}
@@ -33,44 +29,38 @@ header span{font-size:12px;color:#8b949e}
 .panel-body .topic-btn{padding:4px 10px;border-radius:4px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;cursor:pointer;font-size:11px}
 .panel-body .topic-btn:hover{background:#30363d;color:#ffd700}
 .panel-body .topic-btn.active{background:#ffd700;color:#000;border-color:#ffd700}
-
-/* Marker Label in Street View */
-.marker-label{background:#ffd700;color:#000;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:700;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.5);cursor:pointer}
-.marker-label:hover{background:#fff}
-
+.sv-label{background:#ffd700;color:#000;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.5);transform:translate(-50%,-100%)}
+.sv-label:hover{transform:translate(-50%,-100%) scale(1.05)}
 @media(max-width:768px){#sidePanel{width:100%;max-height:50vh}}
 </style>
 </head>
 <body>
 <header>
   <h1>🏘️ Memory Palace</h1>
-  <span>Akuntansi Dasar — Komplek Citra Gran</span>
+  <span>Akuntansi Dasar — Jl. MH Thamrin Jakarta</span>
 </header>
 <div class="main-wrap">
   <div id="streetview"></div>
   <div id="sidePanel">
     <div class="panel-header">
       <h2 id="panelTitle">🏠 Pilih Rumah</h2>
-      <div class="sub" id="panelSub">Klik marker di Street View untuk mulai belajar</div>
+      <div class="sub" id="panelSub">Klik marker di Street View</div>
     </div>
     <div class="panel-body" id="panelBody">
       <div style="color:#8b949e;text-align:center;padding:40px">
         <div style="font-size:48px;margin-bottom:16px">🏘️</div>
-        <p style="font-size:14px">Selamat datang di Memory Palace Akuntansi Dasar</p>
-        <p style="font-size:12px;margin-top:8px">Setiap rumah = satu topik akuntansi.<br>Jalan kaki di Street View, klik rumah untuk belajar.</p>
-        <div class="topic-nav" style="justify-content:center;margin-top:20px" id="topicNav"></div>
+        <p style="font-size:14px">Memuat Memory Palace...</p>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// ===== ACCOUNTING MARKDOWN CONTENT =====
 const CONTENT = `# Pengertian Akuntansi
 Akuntansi adalah seni pencatatan, penggolongan, dan peringkasan transaksi keuangan.
 
 ## Definisi Menurut Para Ahli
-- **AICPA**: Seni mencatat, menggolongkan, dan meringkas transasi
+- **AICPA**: Seni mencatat, menggolongkan, dan meringkas transaksi
 - **IAI**: Proses mengidentifikasi, mengukur, dan melaporkan informasi ekonomi
 
 ## Siklus Akuntansi
@@ -82,324 +72,170 @@ Akuntansi adalah seni pencatatan, penggolongan, dan peringkasan transaksi keuang
 6. Laporan keuangan
 
 ## Prinsip Dasar
-- \`Konsep Entitas\`: Perusahaan terpisah dari pemilik
-- \`Biaya Historis\`: Aset dicatat sebesar harga perolehan
-- \`Matching\`: Beban dibandingkan dengan pendapatan
+- Konsep Entitas: Perusahaan terpisah dari pemilik
+- Biaya Historis: Aset dicatat sebesar harga perolehan
 
 # Persamaan Dasar Akuntansi
-Formula paling fundamental dalam akuntansi:
-
-\`\`\`
 ASET = LIABILITAS + EKUITAS
-\`\`\`
 
 ## Komponen
-- **Aset**: Sumber daya yang dimiliki perusahaan (kas, piutang, gedung)
-- **Liabilitas**: Utang perusahaan ke pihak lain
-- **Ekuitas**: Hak pemilik atas aset perusahaan
+- **Aset**: Sumber daya perusahaan (kas, piutang, gedung)
+- **Liabilitas**: Utang perusahaan
+- **Ekuitas**: Hak pemilik
 
-## Contoh Transaksi
-| Transaksi | Aset | = | Liabilitas | + | Ekuitas |
-|-----------|:---:|:-:|:----------:|:-:|:-------:|
-| Setor modal | +Rp10jt | | | | +Rp10jt |
-| Beli gedung kredit | +Rp50jt | | +Rp50jt | | |
-| Bayar utang | -Rp5jt | | -Rp5jt | | |
+## Contoh
+Setor modal Rp10jt: Aset +10jt, Ekuitas +10jt
 
 # Jurnal Umum
-Buku harian untuk mencatat semua transaksi secara kronologis.
+Buku harian kronologis transaksi.
 
 ## Aturan Debit & Kredit
-\`\`\`
-ASET    (+DEBIT, -KREDIT)
-LIABILITAS (-DEBIT, +KREDIT)
-EKUITAS   (-DEBIT, +KREDIT)
-PENDAPATAN(-DEBIT, +KREDIT)
-BEBAN   (+DEBIT, -KREDIT)
-\`\`\`
+Aset (+Debit, -Kredit), Liabilitas (-Debit, +Kredit)
+Ekuitas (-Debit, +Kredit), Beban (+Debit, -Kredit)
 
 ## Contoh Jurnal
-**Transaksi**: Pemilik menyetor uang Rp10.000.000 sebagai modal
-
-| Tanggal | Akun | Debit | Kredit |
-|---------|------|:----:|:------:|
-| 1 Jan | Kas | 10.000.000 | |
-| | Modal | | 10.000.000 |
-
-### Tips
-- Debit selalu di kiri, Kredit di kanan
-- Total Debit harus SAMA dengan total kredit
+Setor modal: Kas (Debit) 10jt, Modal (Kredit) 10jt
 
 # Buku Besar
-Kumpulan akun-akun yang digunakan untuk mengelompokkan transaksi.
+Kumpulan akun untuk kelompok transaksi.
 
-## Bentuk Buku Besar
-- **T-Account**: Bentuk paling sederhana mirip huruf T
-- **Staffel**: Bentuk bersaldo
+## Bentuk
+- T-Account: Bentuk T sederhana
+- Staffel: Bentuk bersaldo
 
-### Cara Posting
-1. Catat di jurnal umum
-2. Pindahkan ke buku besar per akun
-3. Hitung saldo akhir
-
-## Daftar Akun (Chart of Accounts)
-- **1xxx**: Aset
-- **2xxx**: Liabilitas
-- **3xxx**: Ekuitas
-- **4xxx**: Pendapatan
-- **5xxx**: Beban
+## Daftar Akun
+1xxx Aset, 2xxx Liabilitas, 3xxx Ekuitas
+4xxx Pendapatan, 5xxx Beban
 
 # Laporan Keuangan
-Output akhir dari siklus akuntansi yang menunjukkan kondisi perusahaan.
+Output akhir siklus akuntansi.
 
-## Laba Rugi (Income Statement)
-Pendapatan - Beban = Laba/Rugi Bersih
+## Laba Rugi
+Pendapatan - Beban = Laba/Rugi
 
-## Perubahan Ekuitas
-Ekuitas Awal + Laba - Prive = Ekuitas Akhir
+## Neraca
+ASET = LIABILITAS + EKUITAS
 
-## Neraca (Balance Sheet)
-\`\`\`
-ASET (lancar + tetap) = LIABILITAS (jangka pendek + panjang) + EKUITAS
-\`\`\`
-
-## Arus Kas (Cash Flow)
-- **Operasi**: Aktivitas utama bisnis
-- **Investasi**: Pembelian/penjualan aset tetap
-- **Pendanaan**: Utang, modal, dividen
+## Arus Kas
+Operasi, Investasi, Pendanaan
 `;
 
-// ===== PARSE MARKDOWN =====
+const BASE_LAT=-6.1865,BASE_LNG=106.8232;
+const HOUSES=[
+  {id:'h1',title:'Pengertian Akuntansi',emoji:'🏠',topic:0,color:'#ffd700'},
+  {id:'h2',title:'Persamaan Dasar',emoji:'🏡',topic:1,color:'#58a6ff'},
+  {id:'h3',title:'Jurnal Umum',emoji:'🏘️',topic:2,color:'#3fb950'},
+  {id:'h4',title:'Buku Besar',emoji:'🏚️',topic:3,color:'#ffa657'},
+  {id:'h5',title:'Laporan Keuangan',emoji:'🏤',topic:4,color:'#ff6b6b'},
+];
+
+let topics=[],panorama=null,currentTopic=-1;
+
 function parseMarkdown(md){
   const lines=md.split('\n');
   const topics=[];
-  let current=null,sub=null,subsub=null;
-  
+  let current=null,sub=null;
   lines.forEach(line=>{
-    if(line.startsWith('# ')&&!line.startsWith('##')){
+    if(line.startsWith('# ')&&!line.startsWith('## ')){
       current={title:line.replace('# ',''),h2:[],content:[]};
-      topics.push(current);
-      sub=null;subsub=null;
+      topics.push(current);sub=null;
     }else if(line.startsWith('## ')&&current){
-      sub={title:line.replace('## ',''),h3:[],content:[]};
+      sub={title:line.replace('## ',''),content:[]};
       current.h2.push(sub);
-    }else if(line.startsWith('### ')&&sub){
-      subsub={title:line.replace('### ',''),content:[]};
-      sub.h3.push(subsub);
     }else{
-      if(subsub)subsub.content.push(line);
-      else if(sub)sub.content.push(line);
+      if(sub)sub.content.push(line);
       else if(current)current.content.push(line);
     }
   });
   return topics;
 }
 
-function renderMarkdownHTML(topics,activeIdx){
-  if(activeIdx===undefined||activeIdx>=topics.length){
-    let html='<div class="topic-nav">';
-    topics.forEach((t,i)=>{
-      html+=`<div class="topic-btn" onclick="showTopic(${i})">${t.title}</div>`;
-    });
-    html+='</div>';
-    return html;
-  }
-  
-  const t=topics[activeIdx];
-  let html=`<div class="topic-nav">`;
+function renderTopic(idx){
+  const t=topics[idx];
+  let html='<div class="topic-nav">';
   topics.forEach((tt,i)=>{
-    html+=`<div class="topic-btn ${i===activeIdx?'active':''}" onclick="showTopic(${i})">${tt.title}</div>`;
+    html+=`<div class="topic-btn ${i===idx?'active':''}" onclick="showTopic(${i})">${HOUSES[i]?.emoji||'🏠'} ${tt.title}</div>`;
   });
-  html+=`</div>`;
-  
-  // H1
+  html+='</div>';
   html+=`<h1>${t.title}</h1>`;
-  t.content.forEach(line=>html+=renderLine(line));
-  
-  // H2
+  t.content.forEach(line=>{
+    if(!line.trim())return;
+    if(line.startsWith('- **'))html+=`<li><b>${line.replace(/^\- \*\*(.+?)\*\*/,'$1')}</b></li>`;
+    else if(line.startsWith('- '))html+=`<li>${line.replace('- ','')}</li>`;
+    else if(line.match(/^\d+\.\s/))html+=`<li>${line.replace(/^\d+\.\s/,'')}</li>`;
+    else if(line.includes('`'))html+=`<p>${line.replace(/`(.+?)`/g,'<code>$1</code>')}</p>`;
+    else if(line.startsWith('|')){}
+    else html+=`<p>${line}</p>`;
+  });
   t.h2.forEach(h2=>{
     html+=`<h2>${h2.title}</h2>`;
-    h2.content.forEach(line=>html+=renderLine(line));
-    
-    // H3
-    h2.h3.forEach(h3=>{
-      html+=`<h3>${h3.title}</h3>`;
-      h3.content.forEach(line=>html+=renderLine(line));
+    h2.content.forEach(line=>{
+      if(!line.trim())return;
+      if(line.startsWith('- **'))html+=`<li><b>${line.match(/\*\*(.+?)\*\*/)?.[1]||''}</b>: ${line.replace(/^\- \*\*(.+?)\*\*:?\s?/,'')}</li>`;
+      else if(line.startsWith('- '))html+=`<li>${line.replace('- ','')}</li>`;
+      else if(line.match(/^\d+\.\s/))html+=`<li>${line.replace(/^\d+\.\s/,'')}</li>`;
+      else if(line.startsWith('|')){}
+      else html+=`<p>${line}</p>`;
     });
   });
-  
   return html;
 }
 
-function renderLine(line){
-  if(!line.trim())return '';
-  // Code block
-  if(line.startsWith('```'))return '';
-  // Table
-  if(line.startsWith('|'))return renderTableLine(line);
-  // List
-  if(line.trim().startsWith('- '))return renderListLine(line);
-  if(line.trim().match(/^\d+\.\s/))return renderOrderedLine(line);
-  // Bold + inline code
-  let l=line.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
-  l=l.replace(/`(.+?)`/g,'<code>$1</code>');
-  if(l.trim())return `<p>${l}</p>`;
-  return '';
-}
-
-function renderTableLine(line){
-  if(line.includes('---'))return '';
-  const cells=line.split('|').filter(c=>c.trim());
-  return `<p style="font-family:monospace;font-size:12px;padding-left:16px">${cells.join(' | ')}</p>`;
-}
-
-function renderListLine(line){
-  const text=line.trim().replace(/^- \*\*(.+?)\*\*/,'<b>$1</b>').replace(/^- /,'');
-  return `<li style="margin-left:16px">${text}</li>`;
-}
-
-function renderOrderedLine(line){
-  const text=line.replace(/^\d+\.\s/,'');
-  return `<li style="margin-left:16px">${text}</li>`;
-}
-
-// ===== MEMORY PALACE HOUSE POSITIONS (along Citra Gran street) =====
-// Base location with confirmed Street View: Jl. MH Thamrin Jakarta
-const BASE_LAT=-6.1865,BASE_LNG=106.8232;
-const HOUSES=[
-  {id:'h1',title:'Pengertian Akuntansi',emoji:'🏠',topic:0,offset:{lat:0.0001,lng:0.0005},color:'#ffd700'},
-  {id:'h2',title:'Persamaan Dasar',emoji:'🏡',topic:1,offset:{lat:0.0003,lng:0.0005},color:'#58a6ff'},
-  {id:'h3',title:'Jurnal Umum',emoji:'🏘️',topic:2,offset:{lat:0.0005,lng:0.0005},color:'#3fb950'},
-  {id:'h4',title:'Buku Besar',emoji:'🏚️',topic:3,offset:{lat:0.0007,lng:0.0005},color:'#ffa657'},
-  {id:'h5',title:'Laporan Keuangan',emoji:'🏤',topic:4,offset:{lat:0.0009,lng:0.0005},color:'#ff6b6b'},
-];
-
-// ===== INIT =====
-let panorama,markers=[],topics=[];
-let currentTopic=-1;
-
-function init(){
-  topics=parseMarkdown(CONTENT);
-  
-  // Navigation
-  let navHtml='';
-  topics.forEach((t,i)=>{
-    navHtml+=`<div class="topic-btn" onclick="showTopic(${i})">${HOUSES[i]?.emoji||'🏠'} ${t.title}</div>`;
-  });
-  document.getElementById('topicNav').innerHTML=navHtml;
-  
-  // Street View
-  const svPos={lat:BASE_LAT,lng:BASE_LNG};
-  
-  // Check Street View availability first
-  const svService=new google.maps.StreetViewService();
-  svService.getPanorama({location:svPos,radius:50,preference:'nearest'},function(data,status){
-    if(status==='OK'){
-      panorama=new google.maps.StreetViewPanorama(
-        document.getElementById('streetview'),
-        {position:data.location.latLng,pov:{heading:90,pitch:0},zoom:1,addressControl:false,
-         showRoadLabels:true,motionTracking:false,motionTrackingControl:false,
-         panControl:true,zoomControl:true,enableCloseButton:false}
-      );
-      addHouseMarkers();
-    } else {
-      // Fallback: show regular map
-      document.getElementById('streetview').innerHTML='<div style="text-align:center;padding:40px;color:#8b949e"><div style="font-size:48px">🗺️</div><p style="margin-top:16px">Street View tidak tersedia di lokasi ini.</p><p style="font-size:12px;margin-top:8px">Coba lokasi lain atau buka Google Maps langsung.</p></div>';
-      addHouseMarkersFallback();
-    }
-  });
-}
-    const pos={lat:BASE_LAT+house.offset.lat,lng:BASE_LNG+house.offset.lng};
-    const marker=new google.maps.Marker({
-      position:pos,
-      map:panorama,
-      title:house.title,
-      icon:{
-        path:google.maps.SymbolPath.CIRCLE,
-        scale:0,opacity:0
-      },
-      label:{
-        text:`${house.emoji} ${house.title}`,
-        color:'#000',
-        fontSize:'12px',
-        fontWeight:'700'
-      }
-    });
-    
-    // Custom styled marker label
-    const labelDiv=document.createElement('div');
-    labelDiv.className='marker-label';
-    labelDiv.style.background=house.color;
-    labelDiv.textContent=`${house.emoji} ${house.title}`;
-    
-    const overlay=new google.maps.OverlayView();
-    overlay.onAdd=function(){
-      const div=document.createElement('div');
-      div.style.background=house.color;
-      div.style.color='#000';
-      div.style.padding='6px 12px';
-      div.style.borderRadius='8px';
-      div.style.fontSize='12px';
-      div.style.fontWeight='700';
-      div.style.whiteSpace='nowrap';
-      div.style.cursor='pointer';
-      div.style.boxShadow='0 2px 8px rgba(0,0,0,0.5)';
-      div.style.transform='translate(-50%, -100%)';
-      div.style.marginTop='-12px';
-      div.innerHTML=`${house.emoji} ${house.title}`;
-      div.onclick=()=>showTopic(i);
-      this.getPanes().floatPane.appendChild(div);
-      this.div=div;
-    };
-    overlay.draw=function(){
-      const projection=this.getProjection();
-      const pos=projection.fromLatLngToDivPixel(new google.maps.LatLng(BASE_LAT+house.offset.lat,BASE_LNG+house.offset.lng));
-      if(this.div&&pos){
-        this.div.style.left=pos.x+'px';
-        this.div.style.top=pos.y+'px';
-      }
-    };
-    overlay.setMap(panorama);
-    
-    marker.addListener('click',()=>showTopic(i));
-    markers.push(marker);
-  });
-  
-  // Show first topic
-  showTopic(0);
-}
-
 function showTopic(idx){
-  if(idx<0||idx>=topics.length)return;
   currentTopic=idx;
-  const t=topics[idx];
-  const house=HOUSES[idx];
-  
-  document.getElementById('panelTitle').textContent=`${house?.emoji||'🏠'} ${t.title}`;
-  document.getElementById('panelSub').textContent=`${house?.title||''} • Klik untuk navigasi`;
-  
-  // Render parsed markdown
-  document.getElementById('panelBody').innerHTML=renderMarkdownHTML(topics,idx);
-  
-  // Move Street View to house
-  if(house){
-    panorama.setPosition({lat:BASE_LAT+house.offset.lat,lng:BASE_LNG+house.offset.lng});
+  const h=HOUSES[idx];
+  document.getElementById('panelTitle').textContent=`${h.emoji} ${h.title}`;
+  document.getElementById('panelSub').textContent=`Rumah ${idx+1} dari ${HOUSES.length}`;
+  document.getElementById('panelBody').innerHTML=renderTopic(idx);
+  // Move street view
+  if(panorama){
+    const pos={lat:BASE_LAT+(idx+1)*0.0002,lng:BASE_LNG+0.001};
+    panorama.setPosition(pos);
     panorama.setPov({heading:90,pitch:0});
   }
 }
 
-// ===== NAVIGATION FROM MARKDOWN HEADINGS =====
-document.getElementById('panelBody').addEventListener('click',function(e){
-  const topicBtns=e.target.closest('.topic-btn');
-  if(topicBtns){
-    // Handled by onclick
-  }
-});
+function init(){
+  topics=parseMarkdown(CONTENT);
+  // Check Street View
+  const sv=new google.maps.StreetViewService();
+  sv.getPanorama({location:{lat:BASE_LAT,lng:BASE_LNG},radius:100,preference:'nearest'},function(data,status){
+    if(status==='OK'){
+      panorama=new google.maps.StreetViewPanorama(document.getElementById('streetview'),{
+        position:data.location.latLng,pov:{heading:90,pitch:0},zoom:1,
+        addressControl:false,showRoadLabels:true,panControl:true,zoomControl:true,enableCloseButton:false
+      });
+      // Place house markers
+      HOUSES.forEach((house,i)=>{
+        const pos={lat:BASE_LAT+(i+1)*0.0002,lng:BASE_LNG+0.001};
+        const marker=new google.maps.Marker({position:pos,map:panorama,title:house.title,icon:{path:google.maps.SymbolPath.CIRCLE,scale:0}});
+        // Custom overlay label
+        const overlay=new google.maps.OverlayView();
+        overlay.onAdd=function(){
+          const div=document.createElement('div');
+          div.style.cssText=`background:${house.color};color:#000;padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.5);position:absolute`;
+          div.innerHTML=`${house.emoji} ${house.title}`;
+          div.onclick=()=>showTopic(i);
+          this.getPanes().floatPane.appendChild(div);
+          this.div=div;
+        };
+        overlay.draw=function(){
+          if(!this.div)return;
+          const proj=this.getProjection();
+          const pt=proj.fromLatLngToDivPixel(new google.maps.LatLng(pos.lat,pos.lng));
+          if(pt){this.div.style.left=(pt.x-80)+'px';this.div.style.top=(pt.y-40)+'px';}
+        };
+        overlay.setMap(panorama);
+        marker.addListener('click',()=>showTopic(i));
+      });
+    } else {
+      document.getElementById('streetview').innerHTML='<div style="text-align:center;padding:60px;color:#8b949e"><div style="font-size:64px">🗺️</div><p style="margin-top:16px;font-size:16px">Street View tidak tersedia</p><p style="font-size:12px;margin-top:8px">Coba refresh atau buka link ini dari HP</p></div>';
+    }
+    showTopic(0);
+  });
+}
 
-// Auto-init when API loads
-(function waitForGoogle(){
-  if(window.google&&google.maps&&google.maps.StreetViewPanorama){init();}
-  else setTimeout(waitForGoogle,200);
-})();
+(function wait(){if(window.google&&google.maps&&google.maps.StreetViewService){init();}else setTimeout(wait,300);})();
 </script>
 </body>
 </html>
