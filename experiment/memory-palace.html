@@ -8,11 +8,13 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
 body{height:100vh;display:flex;flex-direction:column;background:#0d1117;color:#e6edf3}
-header{padding:10px 16px;background:#161b22;border-bottom:1px solid #30363d;display:flex;align-items:center;gap:10px}
+header{padding:10px 16px;background:#161b22;border-bottom:1px solid #30363d;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 header h1{font-size:16px;font-weight:700;color:#ffd700}
 header span{font-size:12px;color:#8b949e}
+header button{padding:4px 10px;border-radius:4px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;cursor:pointer;font-size:11px;margin-left:auto}
+header button:hover{background:#30363d}
 .main-wrap{display:flex;flex:1;overflow:hidden}
-#streetview{flex:1;height:100%}
+#map{flex:1;height:100%}
 #sidePanel{width:400px;background:#161b22;border-left:1px solid #30363d;display:flex;flex-direction:column;overflow:hidden}
 .panel-header{padding:12px 16px;border-bottom:1px solid #30363d}
 .panel-header h2{font-size:14px;font-weight:700;color:#ffd700}
@@ -20,36 +22,34 @@ header span{font-size:12px;color:#8b949e}
 .panel-body{flex:1;overflow-y:auto;padding:16px;font-size:13px;line-height:1.6}
 .panel-body h1{font-size:20px;font-weight:700;color:#ffd700;margin:16px 0 8px;padding-bottom:4px;border-bottom:2px solid #ffd700}
 .panel-body h2{font-size:16px;font-weight:700;color:#58a6ff;margin:12px 0 6px;padding-left:8px;border-left:3px solid #58a6ff}
-.panel-body h3{font-size:14px;font-weight:600;color:#3fb950;margin:8px 0 4px;padding-left:16px}
 .panel-body p{margin:4px 0 8px;padding-left:16px;color:#c9d1d9}
-.panel-body ul{padding-left:32px;margin:4px 0 8px;color:#c9d1d9}
-.panel-body li{margin:2px 0}
+.panel-body li{margin:2px 0 2px 24px;color:#c9d1d9}
 .panel-body code{background:#0d1117;padding:1px 6px;border-radius:4px;font-size:12px;color:#ffa657}
 .panel-body .topic-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
 .panel-body .topic-btn{padding:4px 10px;border-radius:4px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;cursor:pointer;font-size:11px}
 .panel-body .topic-btn:hover{background:#30363d;color:#ffd700}
 .panel-body .topic-btn.active{background:#ffd700;color:#000;border-color:#ffd700}
-.sv-label{background:#ffd700;color:#000;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.5);transform:translate(-50%,-100%)}
-.sv-label:hover{transform:translate(-50%,-100%) scale(1.05)}
+.gm-style-iw iframe{display:none!important}
 @media(max-width:768px){#sidePanel{width:100%;max-height:50vh}}
 </style>
 </head>
 <body>
 <header>
   <h1>🏘️ Memory Palace</h1>
-  <span>Akuntansi Dasar — Jl. MH Thamrin Jakarta</span>
+  <span>Akuntansi Dasar</span>
+  <button onclick="window.open('https://www.google.com/maps?q='+BASE_LAT+','+BASE_LNG+'&layer=c','_blank')"><i class="fa-brands fa-google"></i> Street View</button>
 </header>
 <div class="main-wrap">
-  <div id="streetview"></div>
+  <div id="map"></div>
   <div id="sidePanel">
     <div class="panel-header">
       <h2 id="panelTitle">🏠 Pilih Rumah</h2>
-      <div class="sub" id="panelSub">Klik marker di Street View</div>
+      <div class="sub" id="panelSub">Klik rumah di peta</div>
     </div>
     <div class="panel-body" id="panelBody">
       <div style="color:#8b949e;text-align:center;padding:40px">
         <div style="font-size:48px;margin-bottom:16px">🏘️</div>
-        <p style="font-size:14px">Memuat Memory Palace...</p>
+        <p style="font-size:14px">Memuat...</p>
       </div>
     </div>
   </div>
@@ -58,125 +58,106 @@ header span{font-size:12px;color:#8b949e}
 <script>
 const CONTENT = `# Pengertian Akuntansi
 Akuntansi adalah seni pencatatan, penggolongan, dan peringkasan transaksi keuangan.
-
 ## Definisi Menurut Para Ahli
-- **AICPA**: Seni mencatat, menggolongkan, dan meringkas transaksi
-- **IAI**: Proses mengidentifikasi, mengukur, dan melaporkan informasi ekonomi
-
+AICPA: Seni mencatat, menggolongkan, dan meringkas transaksi
+IAI: Proses mengidentifikasi, mengukur, dan melaporkan informasi ekonomi
 ## Siklus Akuntansi
-1. Transaksi terjadi
-2. Jurnal umum
-3. Buku besar
-4. Neraca saldo
-5. Penyesuaian
-6. Laporan keuangan
-
+1. Transaksi terjadi\n2. Jurnal umum\n3. Buku besar\n4. Neraca saldo\n5. Penyesuaian\n6. Laporan keuangan
 ## Prinsip Dasar
-- Konsep Entitas: Perusahaan terpisah dari pemilik
-- Biaya Historis: Aset dicatat sebesar harga perolehan
+Konsep Entitas: Perusahaan terpisah dari pemilik
+Biaya Historis: Aset dicatat sebesar harga perolehan`;
 
-# Persamaan Dasar Akuntansi
+const CONTENT2 = `# Persamaan Dasar Akuntansi
 ASET = LIABILITAS + EKUITAS
-
 ## Komponen
-- **Aset**: Sumber daya perusahaan (kas, piutang, gedung)
-- **Liabilitas**: Utang perusahaan
-- **Ekuitas**: Hak pemilik
-
-## Contoh
+Aset: Sumber daya perusahaan (kas, piutang, gedung)
+Liabilitas: Utang perusahaan ke pihak lain
+Ekuitas: Hak pemilik atas aset perusahaan
+## Contoh Transaksi
 Setor modal Rp10jt: Aset +10jt, Ekuitas +10jt
+Beli gedung kredit Rp50jt: Aset +50jt, Liabilitas +50jt`;
 
-# Jurnal Umum
-Buku harian kronologis transaksi.
-
+const CONTENT3 = `# Jurnal Umum
+Buku harian untuk mencatat semua transaksi secara kronologis.
 ## Aturan Debit & Kredit
-Aset (+Debit, -Kredit), Liabilitas (-Debit, +Kredit)
-Ekuitas (-Debit, +Kredit), Beban (+Debit, -Kredit)
-
+Aset (+Debit, -Kredit) | Liabilitas (-Debit, +Kredit)
+Ekuitas (-Debit, +Kredit) | Beban (+Debit, -Kredit)
 ## Contoh Jurnal
-Setor modal: Kas (Debit) 10jt, Modal (Kredit) 10jt
+Setor modal Rp10.000.000:
+Kas (Debit) Rp10.000.000
+Modal (Kredit) Rp10.000.000
+### Tips
+Debit selalu di kiri, kredit di kanan
+Total debit = total kredit`;
 
-# Buku Besar
-Kumpulan akun untuk kelompok transaksi.
-
-## Bentuk
-- T-Account: Bentuk T sederhana
-- Staffel: Bentuk bersaldo
-
+const CONTENT4 = `# Buku Besar
+Kumpulan akun untuk mengelompokkan transaksi.
+## Bentuk Buku Besar
+T-Account: Bentuk T sederhana
+Staffel: Bentuk bersaldo
+## Cara Posting
+1. Catat di jurnal umum
+2. Pindahkan per akun ke buku besar
+3. Hitung saldo akhir
 ## Daftar Akun
-1xxx Aset, 2xxx Liabilitas, 3xxx Ekuitas
-4xxx Pendapatan, 5xxx Beban
+1xxx Aset | 2xxx Liabilitas | 3xxx Ekuitas
+4xxx Pendapatan | 5xxx Beban`;
 
-# Laporan Keuangan
+const CONTENT5 = `# Laporan Keuangan
 Output akhir siklus akuntansi.
-
 ## Laba Rugi
-Pendapatan - Beban = Laba/Rugi
-
+Pendapatan - Beban = Laba/Rugi Bersih
+## Perubahan Ekuitas
+Ekuitas Awal + Laba - Prive = Ekuitas Akhir
 ## Neraca
 ASET = LIABILITAS + EKUITAS
-
 ## Arus Kas
-Operasi, Investasi, Pendanaan
-`;
+Operasi: Aktivitas utama bisnis
+Investasi: Pembelian/penjualan aset
+Pendanaan: Utang, modal, dividen`;
 
+const ALL_CONTENT = [CONTENT, CONTENT2, CONTENT3, CONTENT4, CONTENT5];
 const BASE_LAT=-6.1865,BASE_LNG=106.8232;
 const HOUSES=[
-  {id:'h1',title:'Pengertian Akuntansi',emoji:'🏠',topic:0,color:'#ffd700'},
-  {id:'h2',title:'Persamaan Dasar',emoji:'🏡',topic:1,color:'#58a6ff'},
-  {id:'h3',title:'Jurnal Umum',emoji:'🏘️',topic:2,color:'#3fb950'},
-  {id:'h4',title:'Buku Besar',emoji:'🏚️',topic:3,color:'#ffa657'},
-  {id:'h5',title:'Laporan Keuangan',emoji:'🏤',topic:4,color:'#ff6b6b'},
+  {id:'h1',title:'Pengertian Akuntansi',emoji:'🏠',topic:0,color:'#ffd700',lat:-6.1862,lng:106.8228},
+  {id:'h2',title:'Persamaan Dasar',emoji:'🏡',topic:1,color:'#58a6ff',lat:-6.1862,lng:106.8230},
+  {id:'h3',title:'Jurnal Umum',emoji:'🏘️',topic:2,color:'#3fb950',lat:-6.1862,lng:106.8232},
+  {id:'h4',title:'Buku Besar',emoji:'🏚️',topic:3,color:'#ffa657',lat:-6.1862,lng:106.8234},
+  {id:'h5',title:'Laporan Keuangan',emoji:'🏤',topic:4,color:'#ff6b6b',lat:-6.1862,lng:106.8236},
 ];
 
-let topics=[],panorama=null,currentTopic=-1;
-
-function parseMarkdown(md){
-  const lines=md.split('\n');
-  const topics=[];
-  let current=null,sub=null;
-  lines.forEach(line=>{
-    if(line.startsWith('# ')&&!line.startsWith('## ')){
-      current={title:line.replace('# ',''),h2:[],content:[]};
-      topics.push(current);sub=null;
-    }else if(line.startsWith('## ')&&current){
-      sub={title:line.replace('## ',''),content:[]};
-      current.h2.push(sub);
-    }else{
-      if(sub)sub.content.push(line);
-      else if(current)current.content.push(line);
-    }
-  });
-  return topics;
-}
+let map,infoWindow,currentTopic=-1;
 
 function renderTopic(idx){
-  const t=topics[idx];
-  let html='<div class="topic-nav">';
-  topics.forEach((tt,i)=>{
-    html+=`<div class="topic-btn ${i===idx?'active':''}" onclick="showTopic(${i})">${HOUSES[i]?.emoji||'🏠'} ${tt.title}</div>`;
+  const md=ALL_CONTENT[idx];
+  const lines=md.split('\n');
+  let html='<div class="topic-nav" id="topicNav">';
+  HOUSES.forEach((h,i)=>{
+    html+=`<div class="topic-btn ${i===idx?'active':''}" onclick="showTopic(${i})">${h.emoji} ${h.title}</div>`;
   });
   html+='</div>';
-  html+=`<h1>${t.title}</h1>`;
-  t.content.forEach(line=>{
-    if(!line.trim())return;
-    if(line.startsWith('- **'))html+=`<li><b>${line.replace(/^\- \*\*(.+?)\*\*/,'$1')}</b></li>`;
-    else if(line.startsWith('- '))html+=`<li>${line.replace('- ','')}</li>`;
-    else if(line.match(/^\d+\.\s/))html+=`<li>${line.replace(/^\d+\.\s/,'')}</li>`;
-    else if(line.includes('`'))html+=`<p>${line.replace(/`(.+?)`/g,'<code>$1</code>')}</p>`;
-    else if(line.startsWith('|')){}
-    else html+=`<p>${line}</p>`;
-  });
-  t.h2.forEach(h2=>{
-    html+=`<h2>${h2.title}</h2>`;
-    h2.content.forEach(line=>{
-      if(!line.trim())return;
-      if(line.startsWith('- **'))html+=`<li><b>${line.match(/\*\*(.+?)\*\*/)?.[1]||''}</b>: ${line.replace(/^\- \*\*(.+?)\*\*:?\s?/,'')}</li>`;
-      else if(line.startsWith('- '))html+=`<li>${line.replace('- ','')}</li>`;
-      else if(line.match(/^\d+\.\s/))html+=`<li>${line.replace(/^\d+\.\s/,'')}</li>`;
-      else if(line.startsWith('|')){}
-      else html+=`<p>${line}</p>`;
-    });
+  
+  let currentH1='',currentH2='';
+  lines.forEach(line=>{
+    const t=line.trim();
+    if(!t)return;
+    if(t.startsWith('# ')&&!t.startsWith('## ')){
+      currentH1=t.replace('# ','');
+      html+=`<h1>${currentH1}</h1>`;
+    }else if(t.startsWith('## ')){
+      currentH2=t.replace('## ','');
+      html+=`<h2>${currentH2}</h2>`;
+    }else if(t.startsWith('### ')){
+      html+=`<p style="font-weight:600;color:#3fb950;padding-left:16px">${t.replace('### ','')}</p>`;
+    }else if(t.startsWith('- ')){
+      html+=`<li>${t.replace('- ','')}</li>`;
+    }else if(t.match(/^\d+\.\s/)){
+      html+=`<li>${t.replace(/^\d+\.\s/,'')}</li>`;
+    }else if(t.includes('`')){
+      html+=`<p>${t.replace(/`(.+?)`/g,'<code>$1</code>')}</p>`;
+    }else{
+      html+=`<p>${t}</p>`;
+    }
   });
   return html;
 }
@@ -185,57 +166,60 @@ function showTopic(idx){
   currentTopic=idx;
   const h=HOUSES[idx];
   document.getElementById('panelTitle').textContent=`${h.emoji} ${h.title}`;
-  document.getElementById('panelSub').textContent=`Rumah ${idx+1} dari ${HOUSES.length}`;
+  document.getElementById('panelSub').textContent=`Rumah ${idx+1} dari ${HOUSES.length} • Klik untuk navigasi`;
   document.getElementById('panelBody').innerHTML=renderTopic(idx);
-  // Move street view
-  if(panorama){
-    const pos={lat:BASE_LAT+(idx+1)*0.0002,lng:BASE_LNG+0.001};
-    panorama.setPosition(pos);
-    panorama.setPov({heading:90,pitch:0});
+  map.setCenter({lat:h.lat,lng:h.lng});
+  map.setZoom(19);
+  if(infoWindow){
+    infoWindow.setContent(`<b>${h.emoji} ${h.title}</b><br><span style="font-size:11px">Memory Palace - Akuntansi</span>`);
+    infoWindow.setPosition({lat:h.lat,lng:h.lng});
+    infoWindow.open(map);
   }
 }
 
 function init(){
-  topics=parseMarkdown(CONTENT);
-  // Check Street View
-  const sv=new google.maps.StreetViewService();
-  sv.getPanorama({location:{lat:BASE_LAT,lng:BASE_LNG},radius:100,preference:'nearest'},function(data,status){
-    if(status==='OK'){
-      panorama=new google.maps.StreetViewPanorama(document.getElementById('streetview'),{
-        position:data.location.latLng,pov:{heading:90,pitch:0},zoom:1,
-        addressControl:false,showRoadLabels:true,panControl:true,zoomControl:true,enableCloseButton:false
-      });
-      // Place house markers
-      HOUSES.forEach((house,i)=>{
-        const pos={lat:BASE_LAT+(i+1)*0.0002,lng:BASE_LNG+0.001};
-        const marker=new google.maps.Marker({position:pos,map:panorama,title:house.title,icon:{path:google.maps.SymbolPath.CIRCLE,scale:0}});
-        // Custom overlay label
-        const overlay=new google.maps.OverlayView();
-        overlay.onAdd=function(){
-          const div=document.createElement('div');
-          div.style.cssText=`background:${house.color};color:#000;padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.5);position:absolute`;
-          div.innerHTML=`${house.emoji} ${house.title}`;
-          div.onclick=()=>showTopic(i);
-          this.getPanes().floatPane.appendChild(div);
-          this.div=div;
-        };
-        overlay.draw=function(){
-          if(!this.div)return;
-          const proj=this.getProjection();
-          const pt=proj.fromLatLngToDivPixel(new google.maps.LatLng(pos.lat,pos.lng));
-          if(pt){this.div.style.left=(pt.x-80)+'px';this.div.style.top=(pt.y-40)+'px';}
-        };
-        overlay.setMap(panorama);
-        marker.addListener('click',()=>showTopic(i));
-      });
-    } else {
-      document.getElementById('streetview').innerHTML='<div style="text-align:center;padding:60px;color:#8b949e"><div style="font-size:64px">🗺️</div><p style="margin-top:16px;font-size:16px">Street View tidak tersedia</p><p style="font-size:12px;margin-top:8px">Coba refresh atau buka link ini dari HP</p></div>';
-    }
-    showTopic(0);
+  map=new google.maps.Map(document.getElementById('map'),{
+    center:{lat:BASE_LAT,lng:BASE_LNG},zoom:18,
+    mapTypeId:google.maps.MapTypeId.STREETVIEW,
+    streetViewControl:true,
+    fullscreenControl:true,
+    zoomControl:true,
   });
+  infoWindow=new google.maps.InfoWindow();
+  
+  // Place house markers
+  HOUSES.forEach((h,i)=>{
+    const marker=new google.maps.Marker({
+      position:{lat:h.lat,lng:h.lng},map,
+      title:h.title,
+      icon:{
+        path:'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 Z',
+        fillColor:h.color,fillOpacity:0.9,
+        strokeColor:'#fff',strokeWeight:2,
+        scale:1.2,labelOrigin:new google.maps.Point(0,-15)
+      },
+      label:{text:h.emoji,fontSize:'14px',color:'#000'}
+    });
+    marker.addListener('click',()=>showTopic(i));
+    marker.addListener('mouseover',function(){this.setAnimation(google.maps.Animation.BOUNCE);setTimeout(()=>this.setAnimation(null),600);});
+  });
+  
+  // Street View link in marker labels
+  HOUSES.forEach((h,i)=>{
+    const marker=new google.maps.Marker({
+      position:{lat:h.lat+0.00005,lng:h.lng},map,
+      icon:{path:google.maps.SymbolPath.CIRCLE,scale:0},
+      title:'Buka Street View'
+    });
+    marker.addListener('click',function(){
+      window.open(`https://www.google.com/maps?q=${h.lat},${h.lng}&layer=c`,'_blank');
+    });
+  });
+  
+  showTopic(0);
 }
 
-(function wait(){if(window.google&&google.maps&&google.maps.StreetViewService){init();}else setTimeout(wait,300);})();
+(function w(){if(window.google&&google.maps&&google.maps.Map){init();}else setTimeout(w,300);})();
 </script>
 </body>
 </html>
