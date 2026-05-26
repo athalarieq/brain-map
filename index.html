@@ -364,6 +364,13 @@ function openPanel(id){
     });
   }
   
+  // Geocode button for medium/low accuracy nodes
+  if(n.accuracy!=='high'){
+    h+=`<button class="filter-btn" style="width:100%;margin-bottom:8px;background:#4285f4;color:#fff;border-color:#4285f4" onclick="geocodeNode('${n.id}')">
+      <i class="fas fa-crosshairs"></i> Cari Koordinat Presisi via Google</button>
+    <div id="geocodeResult" style="display:none"></div>`;
+  }
+  
   if(n.metadata&&Object.keys(n.metadata).length>0){
     h+='<div class="section"><h3>Data</h3><table>';
     Object.entries(n.metadata).forEach(([k,v])=>h+=`<tr><td>${k.replace(/_/g,' ')}</td><td><b>${v}</b></td></tr>`);
@@ -451,6 +458,48 @@ function toggleTheme(){
 document.getElementById('search').addEventListener('input',function(){
   if(!placesActive)renderNodes();
 });
+
+// ===== GEOCODE NODE via Google Places =====
+function geocodeNode(id){
+  const n=nodeIndex[id];if(!n)return;
+  const btn=event.target;
+  btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Mencari...';
+  const div=document.getElementById('geocodeResult');if(!div)return;
+  div.style.display='block';div.innerHTML='Mencari koordinat presisi...';
+  
+  const svc=new google.maps.places.PlacesService(document.createElement('div'));
+  svc.textSearch({query:`${n.title} Indonesia`},function(r,s){
+    if(s==='OK'&&r&&r[0]&&r[0].geometry){
+      const lat=r[0].geometry.location.lat(),lng=r[0].geometry.location.lng();
+      const addr=r[0].formatted_address||'';
+      div.innerHTML=`<div style="background:#d4edda;border-radius:6px;padding:8px;font-size:11px;margin-top:4px">
+        <b>✅ Ditemukan!</b><br>
+        📍 ${addr}<br>
+        🎯 ${lat.toFixed(5)}, ${lng.toFixed(5)}<br>
+        <span style="font-size:10px;color:#666">Marker dipindah ke lokasi baru. Koordinat lama: ${n.lat.toFixed(5)}, ${n.lng.toFixed(5)}</span>
+      </div>`;
+      
+      // Move marker on map
+      markers.forEach(m=>{
+        if(m.getTitle()===n.title||m.getPosition().lat().toFixed(3)===n.lat.toFixed(3)){
+          m.setPosition({lat,lng});
+        }
+      });
+      
+      // Update nodeIndex
+      n.lat=lat;n.lng=lng;n.accuracy='high';
+      
+      // Update infoWindow position if open
+      infoWindow.setPosition({lat,lng});
+      
+      // Move map
+      map.setCenter({lat,lng});map.setZoom(13);
+    } else {
+      div.innerHTML='<div style="background:#f8d7da;border-radius:6px;padding:8px;font-size:11px;margin-top:4px">❌ Tidak ditemukan di Google Places. Coba search manual via tombol "📍 Tempat".</div>';
+    }
+    btn.disabled=false;btn.innerHTML='<i class="fas fa-crosshairs"></i> Cari Koordinat Presisi via Google';
+  });
+}
 
 // ===== START =====
 // initMap called automatically via URL callback
