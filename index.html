@@ -341,32 +341,32 @@ function openPanel(id){
   h+=`<div id="gPlacePhoto" style="margin-bottom:10px;border-radius:8px;overflow:hidden;display:none"><img id="gPlaceImg" style="width:100%;display:block;max-height:180px;object-fit:cover"></div>`;
   h+=`<div id="gPlaceInfo" style="font-size:12px;margin-bottom:8px;display:none"></div>`;
   
-  // Try to get Google Place details
+  // Try to get Google Place details using textSearch (more reliable)
   if(window.google&&google.maps&&google.maps.places){
-    const service=new google.maps.places.PlacesService(map);
-    service.findPlaceFromQuery({
-      query:`${n.title} Indonesia`,
-      fields:['photos','rating','user_ratings_total','formatted_address','formatted_phone_number','opening_hours','website','price_level','types']
-    },function(results,status){
+    const service=new google.maps.places.PlacesService(document.createElement('div'));
+    service.textSearch({query:`${n.title} Indonesia`},function(results,status){
       if(status==='OK'&&results&&results[0]){
         const p=results[0];
-        // Photo
-        if(p.photos&&p.photos[0]){
-          const img=document.getElementById('gPlaceImg');
-          img.src=p.photos[0].getUrl({maxWidth:400,maxHeight:200});
-          document.getElementById('gPlacePhoto').style.display='block';
-        }
-        // Info card
-        let gi='<div style="background:var(--input-bg);border-radius:6px;padding:8px;font-size:11px">';
-        gi+=`<b>${p.name}</b>`;
-        if(p.rating)gi+=`<br>⭐ ${p.rating} (${p.user_ratings_total||0} ulasan)`;
-        if(p.formatted_address)gi+=`<br>📍 ${p.formatted_address}`;
-        if(p.formatted_phone_number)gi+=`<br>📞 ${p.formatted_phone_number}`;
-        if(p.website)gi+=`<br>🌐 <a href="${p.website}" target="_blank" style="color:var(--accent)">Website</a>`;
-        if(p.opening_hours)gi+=`<br>🕐 ${p.opening_hours.open_now?'Buka sekarang':'Tutup'}`;
-        gi+='</div>';
-        document.getElementById('gPlaceInfo').innerHTML=gi;
-        document.getElementById('gPlaceInfo').style.display='block';
+        // Try to get full details for phone/hours/website
+        service.getDetails({placeId:p.place_id,fields:['name','photos','rating','user_ratings_total','formatted_address','formatted_phone_number','opening_hours','website','price_level']},function(detail,dStatus){
+          const pd = dStatus==='OK'&&detail ? detail : p;
+          // Photo
+          if(pd.photos&&pd.photos[0]){
+            document.getElementById('gPlaceImg').src=pd.photos[0].getUrl({maxWidth:400,maxHeight:200});
+            document.getElementById('gPlacePhoto').style.display='block';
+          }
+          // Info
+          let gi='<div style="background:var(--input-bg);border-radius:6px;padding:8px;font-size:11px">';
+          gi+=`<b>${pd.name}</b>`;
+          if(pd.rating)gi+=`<br>⭐ ${pd.rating} (${pd.user_ratings_total||0})`;
+          if(pd.formatted_address)gi+=`<br>📍 ${pd.formatted_address}`;
+          if(pd.formatted_phone_number)gi+=`<br>📞 ${pd.formatted_phone_number}`;
+          if(pd.website)gi+=`<br>🌐 <a href="${pd.website}" target="_blank" style="color:var(--accent)">Website</a>`;
+          if(pd.opening_hours)gi+=`<br>🕐 ${pd.opening_hours.open_now?'Buka':'Tutup'}`;
+          gi+='</div>';
+          document.getElementById('gPlaceInfo').innerHTML=gi;
+          document.getElementById('gPlaceInfo').style.display='block';
+        });
       }
     });
   }
