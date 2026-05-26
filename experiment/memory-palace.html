@@ -193,27 +193,13 @@ function init(){
       position:{lat:h.lat,lng:h.lng},map,
       title:h.title,
       icon:{
-        path:'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 Z',
-        fillColor:h.color,fillOpacity:0.9,
-        strokeColor:'#fff',strokeWeight:2,
-        scale:1.2,labelOrigin:new google.maps.Point(0,-15)
-      },
-      label:{text:h.emoji,fontSize:'14px',color:'#000'}
+        url:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="60" height="70"><circle cx="30" cy="25" r="22" fill="'+(i===0?'#ffd700':i===1?'#58a6ff':i===2?'#3fb950':i===3?'#ffa657':'#ff6b6b')+'" stroke="#fff" stroke-width="3"/><text x="30" y="32" text-anchor="middle" font-size="22">'+(h.emoji||'🏠')+'</text><polygon points="30,65 15,45 45,45" fill="'+(i===0?'#ffd700':i===1?'#58a6ff':i===2?'#3fb950':i===3?'#ffa657':'#ff6b6b')+'" stroke="#fff" stroke-width="2"/></svg>'),
+        scaledSize:new google.maps.Size(40,50),
+        anchor:new google.maps.Point(20,50)
+      }
     });
     marker.addListener('click',()=>showTopic(i));
     marker.addListener('mouseover',function(){this.setAnimation(google.maps.Animation.BOUNCE);setTimeout(()=>this.setAnimation(null),600);});
-  });
-  
-  // Street View link in marker labels
-  HOUSES.forEach((h,i)=>{
-    const marker=new google.maps.Marker({
-      position:{lat:h.lat+0.00005,lng:h.lng},map,
-      icon:{path:google.maps.SymbolPath.CIRCLE,scale:0},
-      title:'Buka Street View'
-    });
-    marker.addListener('click',function(){
-      window.open(`https://www.google.com/maps?q=${h.lat},${h.lng}&layer=c`,'_blank');
-    });
   });
   
   showTopic(0);
