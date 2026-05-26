@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Memory Palace - Akuntansi Dasar</title>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm6lkpcCCz6o8DH6K0afQsNF_jnwNXCeo&libraries=places&v=weekly&callback=init" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm6lkpcCCz6o8DH6K0afQsNF_jnwNXCeo&libraries=places&v=weekly"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
 body{height:100vh;display:flex;flex-direction:column;background:#0d1117;color:#e6edf3}
@@ -289,15 +289,25 @@ function init(){
   
   // Street View
   const svPos={lat:BASE_LAT,lng:BASE_LNG};
-  panorama=new google.maps.StreetViewPanorama(
-    document.getElementById('streetview'),
-    {position:svPos,pov:{heading:90,pitch:0},zoom:1,addressControl:false,
-     showRoadLabels:true,motionTracking:false,motionTrackingControl:false,
-     panControl:true,zoomControl:true,enableCloseButton:false}
-  );
   
-  // House markers in Street View
-  HOUSES.forEach((house,i)=>{
+  // Check Street View availability first
+  const svService=new google.maps.StreetViewService();
+  svService.getPanorama({location:svPos,radius:50,preference:'nearest'},function(data,status){
+    if(status==='OK'){
+      panorama=new google.maps.StreetViewPanorama(
+        document.getElementById('streetview'),
+        {position:data.location.latLng,pov:{heading:90,pitch:0},zoom:1,addressControl:false,
+         showRoadLabels:true,motionTracking:false,motionTrackingControl:false,
+         panControl:true,zoomControl:true,enableCloseButton:false}
+      );
+      addHouseMarkers();
+    } else {
+      // Fallback: show regular map
+      document.getElementById('streetview').innerHTML='<div style="text-align:center;padding:40px;color:#8b949e"><div style="font-size:48px">🗺️</div><p style="margin-top:16px">Street View tidak tersedia di lokasi ini.</p><p style="font-size:12px;margin-top:8px">Coba lokasi lain atau buka Google Maps langsung.</p></div>';
+      addHouseMarkersFallback();
+    }
+  });
+}
     const pos={lat:BASE_LAT+house.offset.lat,lng:BASE_LNG+house.offset.lng};
     const marker=new google.maps.Marker({
       position:pos,
@@ -385,7 +395,11 @@ document.getElementById('panelBody').addEventListener('click',function(e){
   }
 });
 
-// Init when API loads (called via URL callback)
+// Auto-init when API loads
+(function waitForGoogle(){
+  if(window.google&&google.maps&&google.maps.StreetViewPanorama){init();}
+  else setTimeout(waitForGoogle,200);
+})();
 </script>
 </body>
 </html>
