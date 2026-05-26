@@ -206,17 +206,36 @@ function renderNodes(){
     const marker=new google.maps.Marker({
       position:{lat,lng},map,
       icon:makeIcon(clr,sz,op),
-      title:p.title
+      title:p.title,
+      label:{text:p.emoji||'📌',fontSize:'10px'}
     });
     
-    let info=`<div class="info-window"><h2>${p.emoji||'📌'} ${p.title}</h2><span class="cat-badge" style="background:${cat.color};color:${cat.color==='#ffd700'?'#000':'#fff'}">${cat.emoji} ${cat.label}</span>`;
-    if(p.description)info+=`<div class="desc">${p.description}</div>`;
+    // Build rich info card with ALL data visible
+    let info=`<div class="info-window">`;
+    info+=`<div style="display:flex;gap:8px;align-items:start;margin-bottom:6px">`;
+    info+=`<div style="font-size:24px">${p.emoji||'📌'}</div>`;
+    info+=`<div><h2 style="margin:0;font-size:15px">${p.title}</h2>`;
+    info+=`<span class="cat-badge" style="background:${cat.color};color:${cat.color==='#ffd700'?'#000':'#fff'};font-size:10px">${cat.emoji} ${cat.label}</span>`;
+    info+=`<span style="font-size:10px;color:#888;margin-left:6px">${p.accuracy==='high'?'✅':p.accuracy==='medium'?'⚠️':'❌'} ${p.accuracy}</span>`;
+    info+=`</div></div>`;
+    if(p.description)info+=`<div style="font-size:11px;color:#555;margin:4px 0">${p.description}</div>`;
     if(p.metadata&&Object.keys(p.metadata).length>0){
       info+='<table>';
-      Object.entries(p.metadata).slice(0,4).forEach(([k,v])=>info+=`<tr><td>${k.replace(/_/g,' ')}</td><td><b>${v}</b></td></tr>`);
+      Object.entries(p.metadata).forEach(([k,v])=>info+=`<tr><td>${k.replace(/_/g,' ')}</td><td><b>${v}</b></td></tr>`);
       info+='</table>';
     }
-    info+=`<button class="panel-btn" onclick="closeInfo();openPanel('${p.id}')">📋 Detail →</button>`;
+    // Connections in info window
+    if(p.connections&&p.connections.length>0){
+      info+='<div style="margin:4px 0;font-size:11px"><b>🔗 Terhubung:</b> ';
+      p.connections.slice(0,3).forEach(c=>{
+        const t=nodeIndex[c.id];
+        if(t)info+=`<span style="background:#f0f0f0;padding:1px 5px;border-radius:3px;margin:1px">${t.emoji||''} ${t.title}</span> `;
+      });
+      info+='</div>';
+    }
+    // Street View thumbnail
+    info+=`<div style="margin:4px 0;border-radius:6px;overflow:hidden"><img src="https://maps.googleapis.com/maps/api/streetview?size=280x100&location=${lat},${lng}&fov=80&key=AIzaSyBm6lkpcCCz6o8DH6K0afQsNF_jnwNXCeo" style="width:100%;display:block" onerror="this.style.display='none'" alt="street view"></div>`;
+    info+=`<button class="panel-btn" onclick="closeInfo();openPanel('${p.id}')">📋 Detail Lengkap →</button>`;
     if(routeMode&&p.id){
       if(!routeStart)info+=`<button class="panel-btn" style="background:#4488ff;color:#fff;margin-top:4px" onclick="event.stopPropagation();startRoute('${p.id}')">🚀 Awal Rute</button>`;
       else if(routeStart!==p.id)info+=`<button class="panel-btn" style="background:#ff4444;color:#fff;margin-top:4px" onclick="event.stopPropagation();showRoute('${routeStart}','${p.id}')">📍 Rute</button>`;
