@@ -329,7 +329,7 @@ function findPath(startId,endId){
   return null;
 }
 
-// ===== SIDE PANEL =====
+// ===== SIDE PANEL with Google Place Details =====
 function openPanel(id){
   const n=nodeIndex[id];if(!n)return;
   document.getElementById('sidePanel').classList.add('open');
@@ -337,6 +337,41 @@ function openPanel(id){
   const cat=CATS[n.category]||{emoji:'📌',label:'?',color:'#888'};
   let h=`<span class="cat-badge" style="background:${cat.color};color:${cat.color==='#ffd700'?'#000':'#fff'}">${cat.emoji} ${cat.label}</span>`;
   h+=`<div class="desc">${n.description||''}</div>`;
+  
+  // Google Place Photo (if Places API finds it)
+  h+=`<div id="gPlacePhoto" style="margin-bottom:10px;border-radius:8px;overflow:hidden;display:none"><img id="gPlaceImg" style="width:100%;display:block;max-height:180px;object-fit:cover"></div>`;
+  h+=`<div id="gPlaceInfo" style="font-size:12px;margin-bottom:8px;display:none"></div>`;
+  
+  // Try to get Google Place details
+  if(window.google&&google.maps&&google.maps.places){
+    const service=new google.maps.places.PlacesService(map);
+    service.findPlaceFromQuery({
+      query:`${n.title} Indonesia`,
+      fields:['photos','rating','user_ratings_total','formatted_address','formatted_phone_number','opening_hours','website','price_level','types']
+    },function(results,status){
+      if(status==='OK'&&results&&results[0]){
+        const p=results[0];
+        // Photo
+        if(p.photos&&p.photos[0]){
+          const img=document.getElementById('gPlaceImg');
+          img.src=p.photos[0].getUrl({maxWidth:400,maxHeight:200});
+          document.getElementById('gPlacePhoto').style.display='block';
+        }
+        // Info card
+        let gi='<div style="background:var(--input-bg);border-radius:6px;padding:8px;font-size:11px">';
+        gi+=`<b>${p.name}</b>`;
+        if(p.rating)gi+=`<br>⭐ ${p.rating} (${p.user_ratings_total||0} ulasan)`;
+        if(p.formatted_address)gi+=`<br>📍 ${p.formatted_address}`;
+        if(p.formatted_phone_number)gi+=`<br>📞 ${p.formatted_phone_number}`;
+        if(p.website)gi+=`<br>🌐 <a href="${p.website}" target="_blank" style="color:var(--accent)">Website</a>`;
+        if(p.opening_hours)gi+=`<br>🕐 ${p.opening_hours.open_now?'Buka sekarang':'Tutup'}`;
+        gi+='</div>';
+        document.getElementById('gPlaceInfo').innerHTML=gi;
+        document.getElementById('gPlaceInfo').style.display='block';
+      }
+    });
+  }
+  
   if(n.metadata&&Object.keys(n.metadata).length>0){
     h+='<div class="section"><h3>Data</h3><table>';
     Object.entries(n.metadata).forEach(([k,v])=>h+=`<tr><td>${k.replace(/_/g,' ')}</td><td><b>${v}</b></td></tr>`);
@@ -360,7 +395,6 @@ function openPanel(id){
   h+=`<tr><td>Lat</td><td>${n.lat.toFixed(5)}</td></tr><tr><td>Lng</td><td>${n.lng.toFixed(5)}</td></tr>`;
   h+=`<tr><td>Akurasi</td><td>${n.accuracy==='high'?'✅':n.accuracy==='medium'?'⚠️':'❌'} ${n.accuracy}</td></tr>`;
   h+='</table>';
-  // Street View image
   h+=`<div style="margin-top:6px;border-radius:8px;overflow:hidden"><img src="https://maps.googleapis.com/maps/api/streetview?size=360x160&location=${n.lat},${n.lng}&fov=80&key=AIzaSyBm6lkpcCCz6o8DH6K0afQsNF_jnwNXCeo" style="width:100%;display:block" onerror="this.style.display='none'"></div>`;
   h+=`<div style="display:flex;gap:4px;margin-top:6px">`;
   h+=`<a href="https://www.google.com/maps?q=${n.lat},${n.lng}&layer=c" target="_blank" style="flex:1;padding:5px;border-radius:5px;background:#4285f4;color:#fff;text-decoration:none;font-size:10px;text-align:center"><i class="fas fa-street-view"></i> Street</a>`;
