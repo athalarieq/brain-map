@@ -323,7 +323,7 @@ function renderNodes(){
       info+='</div>';
     }
     // Street View thumbnail
-    info+=`<div style="margin:4px 0;border-radius:6px;overflow:hidden"><img src="https://maps.googleapis.com/maps/api/streetview?size=280x100&location=${lat},${lng}&fov=80&key=AIzaSyBm6lkpcCCz6o8DH6K0afQsNF_jnwNXCeo" style="width:100%;display:block" onerror="this.style.display='none'" alt="street view"></div>`;
+    info+=`<div style="margin:4px 0;border-radius:6px;overflow:hidden"><img src="https://maps.googleapis.com/maps/api/streetview?size=280x100&location=${lat},${lng}&fov=80&key=Google API" style="width:100%;display:block" onerror="this.style.display='none'" alt="street view"></div>`;
     info+=`<button class="panel-btn" onclick="closeInfo();openPanel('${p.id}')">📋 Detail Lengkap →</button>`;
     if(routeMode&&p.id){
       if(!routeStart)info+=`<button class="panel-btn" style="background:#4488ff;color:#fff;margin-top:4px" onclick="event.stopPropagation();startRoute('${p.id}')">🚀 Awal Rute</button>`;
@@ -484,7 +484,7 @@ function openPanel(id){
   h+=`<tr><td>Lat</td><td>${n.lat.toFixed(5)}</td></tr><tr><td>Lng</td><td>${n.lng.toFixed(5)}</td></tr>`;
   h+=`<tr><td>Akurasi</td><td>${n.accuracy==='high'?'✅':n.accuracy==='medium'?'⚠️':'❌'} ${n.accuracy}</td></tr>`;
   h+='</table>';
-  h+=`<div style="margin-top:6px;border-radius:8px;overflow:hidden"><img src="https://maps.googleapis.com/maps/api/streetview?size=360x160&location=${n.lat},${n.lng}&fov=80&key=AIzaSyBm6lkpcCCz6o8DH6K0afQsNF_jnwNXCeo" style="width:100%;display:block" onerror="this.style.display='none'"></div>`;
+  h+=`<div style="margin-top:6px;border-radius:8px;overflow:hidden"><img src="https://maps.googleapis.com/maps/api/streetview?size=360x160&location=${n.lat},${n.lng}&fov=80&key=Google API" style="width:100%;display:block" onerror="this.style.display='none'"></div>`;
   h+=`<div style="display:flex;gap:4px;margin-top:6px">`;
   h+=`<a href="https://www.google.com/maps?q=${n.lat},${n.lng}&layer=c" target="_blank" style="flex:1;padding:5px;border-radius:5px;background:#4285f4;color:#fff;text-decoration:none;font-size:10px;text-align:center"><i class="fas fa-street-view"></i> Street</a>`;
   h+=`<a href="https://www.google.com/maps/dir//${n.lat},${n.lng}" target="_blank" style="flex:1;padding:5px;border-radius:5px;background:#34a853;color:#fff;text-decoration:none;font-size:10px;text-align:center"><i class="fas fa-directions"></i> Route</a>`;
@@ -594,6 +594,6 @@ function geocodeNode(id){
 // ===== START =====
 // initMap called automatically via URL callback
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm6lkpcCCz6o8DH6K0afQsNF_jnwNXCeo&libraries=places&v=weekly&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=Google API&libraries=places&v=weekly&callback=initMap" async defer></script>
 </body>
 </html>
